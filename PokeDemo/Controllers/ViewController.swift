@@ -16,45 +16,48 @@ class ViewController: BaseViewController {
     
     // MARK: - Properties
     
-    private let pokemonViewModel = PokemonViewModel()
+//    private let pokemonViewModel = PokemonViewModel()
+    private let presenter = HomeViewPresenter()
+    private var pokemonList: [Pokemon]? = [Pokemon]()
     
     // MARK: - View Life Cycle
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        getPokemonList()
-    }
-    
-    // MARK: - API methods
-    
-    private func getPokemonList() {
-        pokemonViewModel.getPokemonList {[weak self] success, error in
-            guard let strongSelf = self else { return }
-            if success ?? false {
-                strongSelf.pokemonTableView.dataSource = strongSelf
-                strongSelf.pokemonTableView.delegate = strongSelf
-                strongSelf.pokemonTableView.reloadData()
-            } else {
-                AlertUtility.showAlert(strongSelf, title: AlertUtility.AlertTitles.error, message: error?.localizedDescription)
-            }
-        }
+        presenter.setViewDelegate(delegate: self)
+        presenter.getPokemonList()
     }
 }
 
 extension ViewController: UITableViewDataSource, UITableViewDelegate {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return pokemonViewModel.pokemonList?.count ?? 0
+        return pokemonList?.count ?? 0
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: PokemonTableViewCell.cellIdentifier()) as! PokemonTableViewCell
-        cell.setupData(data: pokemonViewModel.pokemonList![indexPath.row])
+        cell.setupData(data: pokemonList![indexPath.row])
         return cell
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let detailViewController: PokemonDetailViewController = CommonUtilities.moveToViewController(storyboard: Constants.Storyboards.main.rawValue, destination: Constants.ViewControllers.pokemonDetail.rawValue) as! PokemonDetailViewController
-        detailViewController.pokemonName = (pokemonViewModel.pokemonList![indexPath.row].name ?? "")
+        detailViewController.pokemonName = (pokemonList![indexPath.row].name ?? "")
         navigationController?.pushViewController(detailViewController, animated: true)
     }
 }
+
+extension ViewController: HomeViewPresenterDelegate {
+    
+    func showPokemonList(pokemon: [Pokemon]) {
+        pokemonList = pokemon
+        pokemonTableView.dataSource = self
+        pokemonTableView.delegate = self
+        pokemonTableView.reloadData()
+    }
+    
+    func showAlert(title: String, message: String) {
+        AlertUtility.showAlert(self, title: title, message: message)
+    }
+}
+
