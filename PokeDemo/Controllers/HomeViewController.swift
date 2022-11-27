@@ -8,7 +8,7 @@
 
 import UIKit
 
-class ViewController: BaseViewController {
+class HomeViewController: BaseViewController {
     
     // MARK: - IBOutlets
     
@@ -16,9 +16,8 @@ class ViewController: BaseViewController {
     
     // MARK: - Properties
     
-//    private let pokemonViewModel = PokemonViewModel()
-    private let presenter = HomeViewPresenter()
-    private var pokemonList: [Pokemon]? = [Pokemon]()
+    let presenter = HomeViewPresenter(service: Service.shared)
+    var pokemonList: [Pokemon]? = [Pokemon]()
     
     // MARK: - View Life Cycle
     
@@ -29,7 +28,7 @@ class ViewController: BaseViewController {
     }
 }
 
-extension ViewController: UITableViewDataSource, UITableViewDelegate {
+extension HomeViewController: UITableViewDataSource, UITableViewDelegate {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return pokemonList?.count ?? 0
     }
@@ -47,7 +46,7 @@ extension ViewController: UITableViewDataSource, UITableViewDelegate {
     }
 }
 
-extension ViewController: HomeViewPresenterDelegate {
+extension HomeViewController: HomeViewPresenterDelegate {
     
     func showPokemonList(pokemon: [Pokemon]) {
         pokemonList = pokemon

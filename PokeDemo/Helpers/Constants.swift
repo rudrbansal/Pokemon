@@ -20,4 +20,8 @@ struct Constants {
     enum Title: String {
         case pokemonDetail = "Pokemon Detail"
     }
+    
+    enum JSONFiles: String {
+        case pokemonList = "PokemonList"
+    }
 }

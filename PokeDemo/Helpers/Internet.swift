@@ -9,30 +9,36 @@ import UIKit
 import Foundation
 import SystemConfiguration
 
- class Internet: NSObject {
+public protocol InternetManager {
+    func isAvailable() -> Bool
+}
+
+class Internet: NSObject, InternetManager {
     
-   class func isAvailable() -> Bool {
+    static let shared = Internet()
+    
+    func isAvailable() -> Bool {
         
-    var zeroAddress = sockaddr_in()
-    zeroAddress.sin_len = UInt8(MemoryLayout<sockaddr_in>.size)
-    zeroAddress.sin_family = sa_family_t(AF_INET)
-    
-    guard let defaultRouteReachability = withUnsafePointer(to: &zeroAddress, {
-        $0.withMemoryRebound(to: sockaddr.self, capacity: 1) {
-            SCNetworkReachabilityCreateWithAddress(nil, $0)
+        var zeroAddress = sockaddr_in()
+        zeroAddress.sin_len = UInt8(MemoryLayout<sockaddr_in>.size)
+        zeroAddress.sin_family = sa_family_t(AF_INET)
+        
+        guard let defaultRouteReachability = withUnsafePointer(to: &zeroAddress, {
+            $0.withMemoryRebound(to: sockaddr.self, capacity: 1) {
+                SCNetworkReachabilityCreateWithAddress(nil, $0)
+            }
+        }) else {
+            return false
         }
-    }) else {
-        return false
-    }
-    
-    var flags: SCNetworkReachabilityFlags = []
-    if !SCNetworkReachabilityGetFlags(defaultRouteReachability, &flags) {
-        return false
-    }
-    
-    let isReachable = flags.contains(.reachable)
-    let needsConnection = flags.contains(.connectionRequired)
-    
-    return (isReachable && !needsConnection)
+        
+        var flags: SCNetworkReachabilityFlags = []
+        if !SCNetworkReachabilityGetFlags(defaultRouteReachability, &flags) {
+            return false
+        }
+        
+        let isReachable = flags.contains(.reachable)
+        let needsConnection = flags.contains(.connectionRequired)
+        
+        return (isReachable && !needsConnection)
     }
 }

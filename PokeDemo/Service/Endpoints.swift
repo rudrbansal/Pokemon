@@ -7,7 +7,7 @@
 
 import Foundation
 
-class Endpoints {
+struct Endpoints {
     
     static let shared = Endpoints()
     

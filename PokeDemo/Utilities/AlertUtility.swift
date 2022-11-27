@@ -9,10 +9,10 @@ import Foundation
 import UIKit
 
 
-class AlertUtility {
+struct AlertUtility {
     
     static let CancelButtonIndex = -1;
-    class func showAlert(_ onController:UIViewController!, title:String?, message:String? ) {
+    static func showAlert(_ onController:UIViewController!, title:String?, message:String? ) {
         showAlert(onController, title: title, message: message, cancelButton: AlertUtility.AlertActions.ok, buttons: nil, actions: nil)
     }
     
@@ -25,7 +25,7 @@ class AlertUtility {
      */
     
     
-    class func showAlert(_ onController:UIViewController!, title:String?,message:String? = nil, cancelButton:String = AlertUtility.AlertActions.ok, buttons:[String]? = nil, actions:(( _ alertAction:UIAlertAction, _ index:Int)->())? = nil) {
+    static func showAlert(_ onController:UIViewController!, title:String?,message:String? = nil, cancelButton:String = AlertUtility.AlertActions.ok, buttons:[String]? = nil, actions:(( _ alertAction:UIAlertAction, _ index:Int)->())? = nil) {
         // make sure it would be run on  main queue
         let alertController = UIAlertController(title: title, message: message, preferredStyle: .alert)
         
@@ -46,7 +46,7 @@ class AlertUtility {
         onController.present(alertController, animated: true, completion: nil)
     }
     
-    class func showAlertWithAction(_ onController:UIViewController!, title:String?, message:String?, buttonTitle: String , actionPerformed: @escaping () -> ()) {
+    static func showAlertWithAction(_ onController:UIViewController!, title:String?, message:String?, buttonTitle: String , actionPerformed: @escaping () -> ()) {
         
         let alert = UIAlertController(title: title, message: message, preferredStyle: UIAlertController.Style.alert)
         alert.addAction(UIAlertAction(title: buttonTitle, style: UIAlertAction.Style.default, handler: { action in
@@ -56,7 +56,7 @@ class AlertUtility {
         onController.present(alert, animated: true, completion: nil)
     }
     
-    class func showMessageWithHandler(sender: UIViewController, alertTitle title:String, message:String, btnCancel:String, btnOk:String, cancelAction:@escaping () -> Void, okAction:@escaping () ->Void)
+    static func showMessageWithHandler(sender: UIViewController, alertTitle title:String, message:String, btnCancel:String, btnOk:String, cancelAction:@escaping () -> Void, okAction:@escaping () ->Void)
     {
         DispatchQueue.main.async() {
             
@@ -82,7 +82,7 @@ class AlertUtility {
         }
     }
     
-    class func showActionSheet(sender: UIViewController, title: String, message: String, btnTitleFirst: String, btnTitleSecond: String, btnActionFirst: @escaping() -> Void, btnActionSecond: @escaping() -> Void) {
+    static func showActionSheet(sender: UIViewController, title: String, message: String, btnTitleFirst: String, btnTitleSecond: String, btnActionFirst: @escaping() -> Void, btnActionSecond: @escaping() -> Void) {
         
         let actionsheet = UIAlertController(title: "", message: message, preferredStyle: .actionSheet)
         
@@ -105,10 +105,10 @@ class AlertUtility {
         static let sessionExpired = "Session Expired"
         static let loading = "Loading..."
         static let logout = "Logout"
-        static let somethingWrong = "Sorry, something went wrong?"
     }
     
     struct AlertMessages {
+        static let somethingWrong = "Sorry, something went wrong?"
         static let noInternet = "Check your internet connection"
     }
     
