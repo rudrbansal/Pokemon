@@ -15,7 +15,14 @@ public protocol InternetManager {
 
 class Internet: NSObject, InternetManager {
     
+    // MARK: - Properties
+    
+    // MARK: - Public
+    
     static let shared = Internet()
+    let noInternet = "Check your internet connection"
+    
+    // MARK: - Method(s)
     
     func isAvailable() -> Bool {
         

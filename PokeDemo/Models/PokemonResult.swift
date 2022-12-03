@@ -12,11 +12,4 @@ struct PokemonResult: Decodable {
     var next: String?
     var previous: String?
     var results: [Pokemon]?
-    
-    enum CodingKeys: String, CodingKey {
-        case count = "count"
-        case next = "next"
-        case previous = "previous"
-        case results = "results"
-    }
 }

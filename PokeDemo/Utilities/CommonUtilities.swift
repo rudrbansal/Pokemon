@@ -8,9 +8,11 @@
 import Foundation
 import UIKit
 
-class CommonUtilities {
+struct CommonUtilities {
     
-    class func moveToViewController(storyboard: String, destination: String) -> UIViewController {
+    // MARK: - Exposed Methods
+    
+    static func moveToViewController(storyboard: String, destination: String) -> UIViewController {
         let storyboard = UIStoryboard(name: storyboard, bundle: nil)
         let vc = storyboard.instantiateViewController(withIdentifier: destination)
         return vc

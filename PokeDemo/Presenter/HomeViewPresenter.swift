@@ -9,11 +9,11 @@ import Foundation
 import UIKit
 
 protocol HomeViewPresenterDelegate: AnyObject {
-    func showPokemonList(pokemon: [Pokemon])
+    func showPokemonList(pokemons: [Pokemon])
     func showAlert(title: String, message: String)
 }
 
-typealias PresenterDelegate = HomeViewPresenterDelegate & UIViewController
+typealias HomePresenterDelegate = HomeViewPresenterDelegate & UIViewController
 
 final class HomeViewPresenter {
     
@@ -21,12 +21,14 @@ final class HomeViewPresenter {
     
     // MARK: Public
     
-    weak var delegate: PresenterDelegate?
-    
+    weak var delegate: HomePresenterDelegate?
+    private let errorTitle = "Error"
+
     // MARK: Private
     
     private let service: ServiceRepresentable
-    
+    private var nextURL: String?
+
     // MARK: Initailizers
     
     init(service: ServiceRepresentable = Service.shared) {
@@ -35,29 +37,68 @@ final class HomeViewPresenter {
     
     // MARK: Exposed method(s)
     
-    func setViewDelegate(delegate: PresenterDelegate) {
+    func setViewDelegate(delegate: HomePresenterDelegate) {
         self.delegate = delegate
     }
     
+    func isLoadingCell(for indexPath: IndexPath) -> Bool {
+        return nextURL != nil
+    }
+    
     func getPokemonList() {
-        service.sendRequestWithJSON(endpoint: Endpoints.shared.baseURL, method: .get) {[weak self] response, error in
-            guard let strongSelf = self else { return }
+        if let nextURL {
+            self.nextURL = nextURL
+        } else {
+            nextURL = Endpoints.shared.baseURL
+        }
+        service.sendRequestWithJSON(endpoint: nextURL!, method: .get) {[weak self] response, error in
+            guard let self = self else { return }
             if error == nil {
                 do {
-                    let pokemons = try JSONDecoder().decode(PokemonResult.self, from: response as! Data)
-                    strongSelf.delegate?.showPokemonList(pokemon: pokemons.results!)
+                    let pokemonResult = try JSONDecoder().decode(PokemonResult.self, from: response as! Data)
+                    self.nextURL = pokemonResult.next
+                    self.delegate?.showPokemonList(pokemons: pokemonResult.results!)
                 }
                 catch {
-                    print("Decoding error is \(error)")
                     // Show alert that something is wrong with server
-                    strongSelf.delegate?.showAlert(title: AlertUtility.AlertTitles.error, message: error.localizedDescription)
+                    self.delegate?.showAlert(title: self.errorTitle, message: error.localizedDescription)
                 }
             } else if !Internet.shared.isAvailable() {
-                strongSelf.delegate?.showAlert(title: AlertUtility.AlertTitles.error, message: AlertUtility.AlertMessages.noInternet)
+                self.delegate?.showAlert(title: self.errorTitle, message: Internet.shared.noInternet)
             } else {
                 // if error is network error - Show no internet connection alert
                 // else: Show general error alert
-                strongSelf.delegate?.showAlert(title: AlertUtility.AlertTitles.error, message: error?.localizedDescription ?? AlertUtility.AlertMessages.somethingWrong)
+                self.delegate?.showAlert(title: self.errorTitle, message: error?.localizedDescription ?? "Sorry, something went wrong")
+            }
+        }
+    }
+    
+    func getPokemonInfo(pokemon: Pokemon, completion: @escaping (UIImage?) -> Void) {
+        service.sendRequestWithJSON(endpoint: pokemon.url!, method: .get) { response, error in
+            if error == nil {
+                do {
+                    if let data = response as? Data{
+                        let sprite = try JSONDecoder().decode(Sprite.self, from: data)
+                        if let frontValue = sprite.sprites?.front_default,
+                           let url = URL(string: frontValue) {
+                            URLSession.shared.dataTask(with: url) { data, response, error in
+                                guard let imageData = data else { return }
+                                completion(UIImage(data: imageData))
+                            }.resume()
+                        }
+                        else{
+                            completion(nil)
+                        }
+                    }
+                    else {
+                        completion(nil)
+                    }
+                }
+                catch {
+                    completion(nil)
+                }
+            } else {
+                completion(nil)
             }
         }
     }

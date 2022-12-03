@@ -9,4 +9,8 @@
 import UIKit
 
 class BaseViewController: UIViewController {
+    
+    class func identifier() -> String {
+        return String(describing: self)
+    }
 }

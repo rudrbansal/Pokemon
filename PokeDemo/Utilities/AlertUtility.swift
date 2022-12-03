@@ -11,9 +11,22 @@ import UIKit
 
 struct AlertUtility {
     
-    static let CancelButtonIndex = -1;
-    static func showAlert(_ onController:UIViewController!, title:String?, message:String? ) {
-        showAlert(onController, title: title, message: message, cancelButton: AlertUtility.AlertActions.ok, buttons: nil, actions: nil)
+    // MARK: - Properties
+    
+    // MARK: - Private
+    
+    private let CancelButtonIndex = -1
+    private let ok = "OK"
+    private let cancel = "Cancel"
+    
+    // MARK: - Public
+
+    static let shared = AlertUtility()
+    
+    // MARK: - Exposed Methods
+    
+    func showAlert(_ onController:UIViewController!, title:String?, message:String? ) {
+        showAlert(onController, title: title, message: message, cancelButton: ok, buttons: nil, actions: nil)
     }
     
     /**
@@ -25,7 +38,7 @@ struct AlertUtility {
      */
     
     
-    static func showAlert(_ onController:UIViewController!, title:String?,message:String? = nil, cancelButton:String = AlertUtility.AlertActions.ok, buttons:[String]? = nil, actions:(( _ alertAction:UIAlertAction, _ index:Int)->())? = nil) {
+    func showAlert(_ onController:UIViewController!, title:String?,message:String? = nil, cancelButton:String, buttons:[String]? = nil, actions:(( _ alertAction:UIAlertAction, _ index:Int)->())? = nil) {
         // make sure it would be run on  main queue
         let alertController = UIAlertController(title: title, message: message, preferredStyle: .alert)
         
@@ -46,7 +59,7 @@ struct AlertUtility {
         onController.present(alertController, animated: true, completion: nil)
     }
     
-    static func showAlertWithAction(_ onController:UIViewController!, title:String?, message:String?, buttonTitle: String , actionPerformed: @escaping () -> ()) {
+    func showAlertWithAction(_ onController:UIViewController!, title:String?, message:String?, buttonTitle: String , actionPerformed: @escaping () -> ()) {
         
         let alert = UIAlertController(title: title, message: message, preferredStyle: UIAlertController.Style.alert)
         alert.addAction(UIAlertAction(title: buttonTitle, style: UIAlertAction.Style.default, handler: { action in
@@ -56,7 +69,7 @@ struct AlertUtility {
         onController.present(alert, animated: true, completion: nil)
     }
     
-    static func showMessageWithHandler(sender: UIViewController, alertTitle title:String, message:String, btnCancel:String, btnOk:String, cancelAction:@escaping () -> Void, okAction:@escaping () ->Void)
+    func showMessageWithHandler(sender: UIViewController, alertTitle title:String, message:String, btnCancel:String, btnOk:String, cancelAction:@escaping () -> Void, okAction:@escaping () ->Void)
     {
         DispatchQueue.main.async() {
             
@@ -82,7 +95,7 @@ struct AlertUtility {
         }
     }
     
-    static func showActionSheet(sender: UIViewController, title: String, message: String, btnTitleFirst: String, btnTitleSecond: String, btnActionFirst: @escaping() -> Void, btnActionSecond: @escaping() -> Void) {
+    func showActionSheet(sender: UIViewController, title: String, message: String, btnTitleFirst: String, btnTitleSecond: String, btnActionFirst: @escaping() -> Void, btnActionSecond: @escaping() -> Void) {
         
         let actionsheet = UIAlertController(title: "", message: message, preferredStyle: .actionSheet)
         
@@ -94,27 +107,7 @@ struct AlertUtility {
             btnActionSecond()
         }))
         
-        actionsheet.addAction(UIAlertAction(title: AlertUtility.AlertActions.cancel, style: .cancel, handler: nil))
+        actionsheet.addAction(UIAlertAction(title: cancel, style: .cancel, handler: nil))
         sender.present(actionsheet,animated: true, completion: nil)
-    }
-    
-    struct AlertTitles {
-        static let alert = "Alert!"
-        static let success = "Success"
-        static let error = "Error"
-        static let sessionExpired = "Session Expired"
-        static let loading = "Loading..."
-        static let logout = "Logout"
-    }
-    
-    struct AlertMessages {
-        static let somethingWrong = "Sorry, something went wrong?"
-        static let noInternet = "Check your internet connection"
-    }
-    
-    struct AlertActions {
-        static let ok = "OK"
-        static let cancel = "Cancel"
-        static let save = "Save"
     }
 }

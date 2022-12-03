@@ -8,7 +8,7 @@
 
 import UIKit
 
-class PokemonDetailViewController: UIViewController {
+class PokemonDetailViewController: BaseViewController {
     
     // MARK: - IBOutlets
     
@@ -16,7 +16,12 @@ class PokemonDetailViewController: UIViewController {
     
     // MARK: - Properties
     
-    private let pokemonDetailViewModel = PokemonDetailViewModel()
+    // MARK: - Private
+
+    private let presenter = PokemonDetailPresenter(service: Service.shared)
+
+    // MARK: Public
+
     var pokemonName: String!
     
     // MARK: - View Life Cycle
@@ -24,22 +29,24 @@ class PokemonDetailViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         self.title = pokemonName.uppercased()
+        presenter.setViewDelegate(delegate: self)
         getPokemonDetails()
     }
     
     // MARK: - API methods
     
     private func getPokemonDetails() {
-        
-        pokemonDetailViewModel.getPokemonDetail(pokemonName: ("/" + pokemonName + "/")) {[weak self] success, error in
-            guard let strongSelf = self else { return }
-            if success ?? false {
-                let url = URL(string: strongSelf.pokemonDetailViewModel.imageURL!)
-                let data = try? Data(contentsOf: url!)
-                strongSelf.pokemonImageView.image = UIImage(data: data!)
-            } else {
-                AlertUtility.showAlert(strongSelf, title: AlertUtility.AlertTitles.error, message: error?.localizedDescription)
-            }
-        }
+        presenter.getPokemonDetail(name: self.pokemonName)
+    }
+}
+
+extension PokemonDetailViewController: PokemonDetailViewPresenterDelegate {
+    func showPokemonDetail(pokemon: SpriteDetail) {
+        let data = try? Data(contentsOf: URL(string: pokemon.front_default!)!)
+        pokemonImageView.image = UIImage(data: data!)
+    }
+    
+    func showAlert(title: String, message: String) {
+        AlertUtility.shared.showAlert(self, title: "Error", message: message)
     }
 }

@@ -12,6 +12,7 @@ import Alamofire
 final class HomeViewPresenterTests: XCTestCase {
     
     var presenter: HomeViewPresenter!
+    private let errorTitle = "Error"
     
     // MARK: - Lifecycle
     
@@ -81,7 +82,7 @@ final class HomeViewPresenterTests: XCTestCase {
         
         // Then
         XCTAssertEqual(mockDelegate.showAlertCalled, true)
-        XCTAssertEqual(mockDelegate.showAlertTitle, AlertUtility.AlertTitles.error)
+        XCTAssertEqual(mockDelegate.showAlertTitle, errorTitle)
         XCTAssertEqual(mockDelegate.showAlertMessage, "The operation couldn’t be completed. (PokeDemoTests.TestError error 1.)")
         // Check the mockDelegate showPokemonList function is called with right Pokemon array
     }
@@ -99,8 +100,8 @@ final class HomeViewPresenterTests: XCTestCase {
         
         // Then
         XCTAssertEqual(mockDelegate.showAlertCalled, true)
-        XCTAssertEqual(mockDelegate.showAlertTitle, AlertUtility.AlertTitles.error)
-//        XCTAssertEqual(mockDelegate.showAlertMessage, AlertUtility.AlertMessages.noInternet)
+        XCTAssertEqual(mockDelegate.showAlertTitle, errorTitle)
+        XCTAssertEqual(mockDelegate.showAlertMessage, Internet.shared.noInternet)
     }
     
     func testGetPokemonListReturnsInvalidDataFromAPI(){}
@@ -122,15 +123,15 @@ struct TestError: Error{
     
 }
 
-final class MockPresenterDelegate: PresenterDelegate {
+final class MockPresenterDelegate: HomePresenterDelegate {
         
     var showAlertCalled: Bool = false
     var showAlertTitle: String?
     var showAlertMessage: String?
     var pokemonList: [Pokemon]?
     
-    func showPokemonList(pokemon: [Pokemon]) {
-        pokemonList = pokemon
+    func showPokemonList(pokemons: [Pokemon]) {
+        pokemonList = pokemons
     }
     
     func showAlert(title: String, message: String) {
