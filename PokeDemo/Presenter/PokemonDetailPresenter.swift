@@ -40,8 +40,8 @@ final class PokemonDetailPresenter {
         self.delegate = delegate
     }
     
-    func getPokemonDetail(name: String) {
-        Service.shared.sendRequestWithJSON(endpoint: (Endpoints.shared.baseURL + "/" + name + "/"), method: .get) {[weak self] response, error in
+    func getPokemonDetail(url: String) {
+        Service.shared.sendRequestWithJSON(endpoint: url, method: .get) {[weak self] response, error in
             guard let self = self else { return }
             if error == nil {
                 do {

@@ -15,11 +15,12 @@ public protocol InternetManager {
 
 class Internet: NSObject, InternetManager {
     
-    // MARK: - Properties
-    
-    // MARK: - Public
+    // MARK: - Singleton
     
     static let shared = Internet()
+    
+    // MARK: - Public Properties
+    
     let noInternet = "Check your internet connection"
     
     // MARK: - Method(s)

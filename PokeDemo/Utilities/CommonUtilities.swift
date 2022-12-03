@@ -10,9 +10,13 @@ import UIKit
 
 struct CommonUtilities {
     
+    // MARK: - Singleton
+    
+    static let shared = CommonUtilities()
+    
     // MARK: - Exposed Methods
     
-    static func moveToViewController(storyboard: String, destination: String) -> UIViewController {
+    func moveToViewController(storyboard: String, destination: String) -> UIViewController {
         let storyboard = UIStoryboard(name: storyboard, bundle: nil)
         let vc = storyboard.instantiateViewController(withIdentifier: destination)
         return vc

@@ -17,18 +17,18 @@ class PokemonDetailViewController: BaseViewController {
     // MARK: - Properties
     
     // MARK: - Private
-
+    
     private let presenter = PokemonDetailPresenter(service: Service.shared)
-
+    
     // MARK: Public
-
-    var pokemonName: String!
+    
+    var pokemon: Pokemon!
     
     // MARK: - View Life Cycle
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.title = pokemonName.uppercased()
+        self.title = pokemon.name?.uppercased()
         presenter.setViewDelegate(delegate: self)
         getPokemonDetails()
     }
@@ -36,14 +36,22 @@ class PokemonDetailViewController: BaseViewController {
     // MARK: - API methods
     
     private func getPokemonDetails() {
-        presenter.getPokemonDetail(name: self.pokemonName)
+        presenter.getPokemonDetail(url: pokemon.url ?? "")
     }
 }
 
 extension PokemonDetailViewController: PokemonDetailViewPresenterDelegate {
+
     func showPokemonDetail(pokemon: SpriteDetail) {
-        let data = try? Data(contentsOf: URL(string: pokemon.front_default!)!)
-        pokemonImageView.image = UIImage(data: data!)
+        if let frontValue = pokemon.front_default,
+           let url = URL(string: frontValue) {
+            URLSession.shared.dataTask(with: url) { data, response, error in
+                guard let imageData = data else { return }
+                DispatchQueue.main.async {
+                    self.pokemonImageView.image = UIImage(data: imageData)
+                }
+            }.resume()
+        }
     }
     
     func showAlert(title: String, message: String) {

@@ -9,13 +9,7 @@ import UIKit
 
 class BaseTableViewCell: UITableViewCell {
     
-    override func awakeFromNib() {
-        super.awakeFromNib()
-    }
-    
-    override func setSelected(_ selected: Bool, animated: Bool) {
-        super.setSelected(selected, animated: animated)
-    }
+    // MARK: - Exposed Methods
     
     class func cellIdentifier() -> String {
         return String(describing: self)

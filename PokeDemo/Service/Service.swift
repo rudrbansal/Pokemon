@@ -20,7 +20,11 @@ extension ServiceRepresentable {
 
 final class Service: ServiceRepresentable {
     
+    // MARK: - Singleton
+    
     static let shared = Service()
+    
+    // MARK: - Exposed Methods
     
     func sendRequestWithJSON(endpoint: String, method: HTTPMethod, parameters: [String:Any]? = nil, header: String? = nil, _ onCompletion: @escaping ( _ response: Any?, _ error: Error?) -> Void) {
         if Internet.shared.isAvailable() {

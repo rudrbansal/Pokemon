@@ -9,17 +9,13 @@ import UIKit
 
 class PokemonTableViewCell: BaseTableViewCell {
     
+    // MARK: - Outlets
+    
     @IBOutlet weak var lblTitle: UILabel!
     @IBOutlet weak var iconImageView: UIImageView!
     
-    override func awakeFromNib() {
-        super.awakeFromNib()
-    }
-    
-    override func setSelected(_ selected: Bool, animated: Bool) {
-        super.setSelected(selected, animated: animated)
-    }
-    
+    // MARK: - Exposed Methods
+
     func setupData(data: Pokemon) {
         lblTitle.text = data.name?.uppercased()
     }

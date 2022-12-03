@@ -10,6 +10,8 @@ import UIKit
 
 class BaseViewController: UIViewController {
     
+    // MARK: - Exposed Methods
+    
     class func identifier() -> String {
         return String(describing: self)
     }

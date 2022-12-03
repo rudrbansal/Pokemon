@@ -25,6 +25,7 @@ class HomeViewController: BaseViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        pokemonTableView.register(UINib(nibName: PokemonTableViewCell.cellIdentifier(), bundle: nil), forCellReuseIdentifier: PokemonTableViewCell.cellIdentifier())
         presenter.setViewDelegate(delegate: self)
         presenter.getPokemonList()
     }
@@ -53,8 +54,8 @@ extension HomeViewController: UITableViewDataSource, UITableViewDelegate {
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        let detailViewController: PokemonDetailViewController = CommonUtilities.moveToViewController(storyboard: "Main", destination: PokemonDetailViewController.identifier()) as! PokemonDetailViewController
-        detailViewController.pokemonName = (pokemonList![indexPath.row].name ?? "")
+        let detailViewController: PokemonDetailViewController = CommonUtilities.shared.moveToViewController(storyboard: "Main", destination: PokemonDetailViewController.identifier()) as! PokemonDetailViewController
+        detailViewController.pokemon = (pokemonList?[indexPath.row])
         navigationController?.pushViewController(detailViewController, animated: true)
     }
     
