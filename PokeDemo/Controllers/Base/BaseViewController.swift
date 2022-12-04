@@ -15,4 +15,10 @@ class BaseViewController: UIViewController {
     class func identifier() -> String {
         return String(describing: self)
     }
+    
+    func moveToViewController(storyboard: String, destination: String) -> UIViewController {
+        let storyboard = UIStoryboard(name: storyboard, bundle: nil)
+        let vc = storyboard.instantiateViewController(withIdentifier: destination)
+        return vc
+    }
 }

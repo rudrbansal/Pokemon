@@ -54,7 +54,7 @@ extension HomeViewController: UITableViewDataSource, UITableViewDelegate {
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        let detailViewController: PokemonDetailViewController = CommonUtilities.shared.moveToViewController(storyboard: "Main", destination: PokemonDetailViewController.identifier()) as! PokemonDetailViewController
+        let detailViewController: PokemonDetailViewController = moveToViewController(storyboard: "Main", destination: PokemonDetailViewController.identifier()) as! PokemonDetailViewController
         detailViewController.pokemon = (pokemonList?[indexPath.row])
         navigationController?.pushViewController(detailViewController, animated: true)
     }
