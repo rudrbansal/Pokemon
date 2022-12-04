@@ -18,7 +18,7 @@ class HomeViewController: BaseViewController {
     
     // MARK: - Private
 
-    private let presenter = HomeViewPresenter(service: Service.shared)
+    private let presenter = HomeViewPresenter()
     private var pokemonList: [Pokemon]? = [Pokemon]()
     
     // MARK: - View Life Cycle
@@ -27,7 +27,7 @@ class HomeViewController: BaseViewController {
         super.viewDidLoad()
         pokemonTableView.register(UINib(nibName: PokemonTableViewCell.cellIdentifier(), bundle: nil), forCellReuseIdentifier: PokemonTableViewCell.cellIdentifier())
         presenter.setViewDelegate(delegate: self)
-        presenter.getPokemonList()
+        presenter.getPokemons()
     }
 }
 
@@ -57,22 +57,6 @@ extension HomeViewController: UITableViewDataSource, UITableViewDelegate {
         let detailViewController: PokemonDetailViewController = CommonUtilities.shared.moveToViewController(storyboard: "Main", destination: PokemonDetailViewController.identifier()) as! PokemonDetailViewController
         detailViewController.pokemon = (pokemonList?[indexPath.row])
         navigationController?.pushViewController(detailViewController, animated: true)
-    }
-    
-    func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
-        let lastRowIndex = tableView.numberOfRows(inSection: 0) - 1
-        if indexPath.row == lastRowIndex {
-            let spinner = UIActivityIndicatorView(style: .medium)
-            spinner.startAnimating()
-            spinner.frame = CGRect(x: CGFloat(0), y: CGFloat(0), width: tableView.bounds.width, height: CGFloat(44))
-            if presenter.isLoadingCell(for: indexPath) {
-                self.pokemonTableView.tableFooterView = spinner
-                self.pokemonTableView.tableFooterView?.isHidden = false
-                presenter.getPokemonList()
-            } else {
-                self.pokemonTableView.tableFooterView?.isHidden = true
-            }
-        }
     }
 }
 

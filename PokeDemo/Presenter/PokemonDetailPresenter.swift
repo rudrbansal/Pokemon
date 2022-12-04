@@ -26,7 +26,6 @@ final class PokemonDetailPresenter {
     // MARK: Private
     
     private let service: ServiceRepresentable
-    private let errorTitle = "Error"
     
     // MARK: Initailizers
     
@@ -49,10 +48,10 @@ final class PokemonDetailPresenter {
                     self.delegate?.showPokemonDetail(pokemon: sprite.sprites!)
                 }
                 catch {
-                    self.delegate?.showAlert(title: self.errorTitle, message: error.localizedDescription)
+                    self.delegate?.showAlert(title: Constants.error, message: error.localizedDescription)
                 }
             } else {
-                self.delegate?.showAlert(title: self.errorTitle, message: error!.localizedDescription)
+                self.delegate?.showAlert(title: Constants.error, message: error!.localizedDescription)
             }
         }
     }

@@ -12,7 +12,6 @@ import Alamofire
 final class HomeViewPresenterTests: XCTestCase {
     
     var presenter: HomeViewPresenter!
-    private let errorTitle = "Error"
     
     // MARK: - Lifecycle
     
@@ -45,7 +44,7 @@ final class HomeViewPresenterTests: XCTestCase {
         
         // When
         presenter = HomeViewPresenter(service: mockService)
-        presenter.getPokemonList()
+        presenter.getPokemons()
         
         // Then
         XCTAssertEqual(mockService.sendRequestWithJSONIsCalledIndex, 1)
@@ -58,7 +57,7 @@ final class HomeViewPresenterTests: XCTestCase {
         let mockDelegate = MockPresenterDelegate()
         presenter = HomeViewPresenter(service: mockService)
         presenter.setViewDelegate(delegate: mockDelegate)
-        presenter.getPokemonList()
+        presenter.getPokemons()
         
         // When service sends successful response
         let stubPokemons = [Pokemon.init(name: "test", url: "Test URL")]
@@ -75,14 +74,14 @@ final class HomeViewPresenterTests: XCTestCase {
         let mockDelegate = MockPresenterDelegate()
         presenter = HomeViewPresenter(service: mockService)
         presenter.setViewDelegate(delegate: mockDelegate)
-        presenter.getPokemonList()
+        presenter.getPokemons()
         
         // When service sends successful response
         mockService.onCompletion?(nil, TestError())
         
         // Then
         XCTAssertEqual(mockDelegate.showAlertCalled, true)
-        XCTAssertEqual(mockDelegate.showAlertTitle, errorTitle)
+        XCTAssertEqual(mockDelegate.showAlertTitle, Constants.error)
         XCTAssertEqual(mockDelegate.showAlertMessage, "The operation couldn’t be completed. (PokeDemoTests.TestError error 1.)")
         // Check the mockDelegate showPokemonList function is called with right Pokemon array
     }
@@ -93,14 +92,14 @@ final class HomeViewPresenterTests: XCTestCase {
         let mockDelegate = MockPresenterDelegate()
         presenter = HomeViewPresenter(service: mockService)
         presenter.setViewDelegate(delegate: mockDelegate)
-        presenter.getPokemonList()
+        presenter.getPokemons()
         
         // When service sends successful response
         mockService.onCompletion?(nil, TestError())
         
         // Then
         XCTAssertEqual(mockDelegate.showAlertCalled, true)
-        XCTAssertEqual(mockDelegate.showAlertTitle, errorTitle)
+        XCTAssertEqual(mockDelegate.showAlertTitle, Constants.error)
         XCTAssertEqual(mockDelegate.showAlertMessage, Internet.shared.noInternet)
     }
     
@@ -112,7 +111,7 @@ final class HomeViewPresenterTests: XCTestCase {
         
         // When
         presenter = HomeViewPresenter(service: mockService)
-        presenter.getPokemonList()
+        presenter.getPokemons()
         
         // Then
         XCTAssertEqual(mockService.sendRequestWithJSONIsCalledIndex, 1)

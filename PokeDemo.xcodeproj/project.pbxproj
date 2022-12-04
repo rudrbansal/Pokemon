@@ -17,6 +17,7 @@
 		17E670222936ED9F008EB850 /* PokemonDetailPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 17E670212936ED9F008EB850 /* PokemonDetailPresenter.swift */; };
 		17E67026293ADFB0008EB850 /* PokemonTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 17E67025293ADFB0008EB850 /* PokemonTableViewCell.xib */; };
 		17E67029293AEC32008EB850 /* UIView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 17E67028293AEC32008EB850 /* UIView.swift */; };
+		17E6702D293B1E1D008EB850 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 17E6702C293B1E1D008EB850 /* Constants.swift */; };
 		17ECE2DE28702022005F2A7A /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 17ECE2DD28702022005F2A7A /* AppDelegate.swift */; };
 		17ECE2E028702022005F2A7A /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 17ECE2DF28702022005F2A7A /* SceneDelegate.swift */; };
 		17ECE2E228702022005F2A7A /* HomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 17ECE2E128702022005F2A7A /* HomeViewController.swift */; };
@@ -35,8 +36,6 @@
 		17ECE3112874B932005F2A7A /* PokemonDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 17ECE3102874B932005F2A7A /* PokemonDetailViewController.swift */; };
 		17ECE3172874C504005F2A7A /* CommonUtilities.swift in Sources */ = {isa = PBXBuildFile; fileRef = 17ECE3162874C504005F2A7A /* CommonUtilities.swift */; };
 		17ECE31B2874D008005F2A7A /* Sprite.swift in Sources */ = {isa = PBXBuildFile; fileRef = 17ECE31A2874D008005F2A7A /* Sprite.swift */; };
-		17FE364529163BF10054B7B6 /* Test.swift in Sources */ = {isa = PBXBuildFile; fileRef = 17FE364429163BF10054B7B6 /* Test.swift */; };
-		17FE3647291655AF0054B7B6 /* Subscripiton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 17FE3646291655AF0054B7B6 /* Subscripiton.swift */; };
 		9241693773CDAF775054A249 /* Pods_PokeDemo.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5A0433058CABC88CD6B8AF82 /* Pods_PokeDemo.framework */; };
 /* End PBXBuildFile section */
 
@@ -70,6 +69,7 @@
 		17E670212936ED9F008EB850 /* PokemonDetailPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PokemonDetailPresenter.swift; sourceTree = "<group>"; };
 		17E67025293ADFB0008EB850 /* PokemonTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = PokemonTableViewCell.xib; sourceTree = "<group>"; };
 		17E67028293AEC32008EB850 /* UIView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIView.swift; sourceTree = "<group>"; };
+		17E6702C293B1E1D008EB850 /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
 		17ECE2DA28702022005F2A7A /* PokeDemo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = PokeDemo.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		17ECE2DD28702022005F2A7A /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		17ECE2DF28702022005F2A7A /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -90,8 +90,6 @@
 		17ECE3102874B932005F2A7A /* PokemonDetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PokemonDetailViewController.swift; sourceTree = "<group>"; };
 		17ECE3162874C504005F2A7A /* CommonUtilities.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommonUtilities.swift; sourceTree = "<group>"; };
 		17ECE31A2874D008005F2A7A /* Sprite.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Sprite.swift; sourceTree = "<group>"; };
-		17FE364429163BF10054B7B6 /* Test.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Test.swift; sourceTree = "<group>"; };
-		17FE3646291655AF0054B7B6 /* Subscripiton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Subscripiton.swift; sourceTree = "<group>"; };
 		3F44F128149B29D5F393F103 /* Pods-PokeDemo.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-PokeDemo.release.xcconfig"; path = "Target Support Files/Pods-PokeDemo/Pods-PokeDemo.release.xcconfig"; sourceTree = "<group>"; };
 		5A0433058CABC88CD6B8AF82 /* Pods_PokeDemo.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_PokeDemo.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		9E7D16EB999C05FA35685F15 /* Pods-PokeDemo.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-PokeDemo.debug.xcconfig"; path = "Target Support Files/Pods-PokeDemo/Pods-PokeDemo.debug.xcconfig"; sourceTree = "<group>"; };
@@ -192,6 +190,14 @@
 			path = Base;
 			sourceTree = "<group>";
 		};
+		17E6702B293B1E09008EB850 /* Constants */ = {
+			isa = PBXGroup;
+			children = (
+				17E6702C293B1E1D008EB850 /* Constants.swift */,
+			);
+			name = Constants;
+			sourceTree = "<group>";
+		};
 		17ECE2D128702022005F2A7A = {
 			isa = PBXGroup;
 			children = (
@@ -219,8 +225,7 @@
 			children = (
 				17ECE2DD28702022005F2A7A /* AppDelegate.swift */,
 				17ECE2DF28702022005F2A7A /* SceneDelegate.swift */,
-				17FE364429163BF10054B7B6 /* Test.swift */,
-				17FE3646291655AF0054B7B6 /* Subscripiton.swift */,
+				17E6702B293B1E09008EB850 /* Constants */,
 				17E67027293AEC26008EB850 /* Extensions */,
 				17ECE3012873B3DB005F2A7A /* Helpers */,
 				17ECE30428744CF9005F2A7A /* Utilities */,
@@ -531,6 +536,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				17E67029293AEC32008EB850 /* UIView.swift in Sources */,
+				17E6702D293B1E1D008EB850 /* Constants.swift in Sources */,
 				17ECE2FB2873ABC2005F2A7A /* Pokemon.swift in Sources */,
 				17747B332881F354003F896B /* HomeViewPresenter.swift in Sources */,
 				17ECE2E228702022005F2A7A /* HomeViewController.swift in Sources */,
@@ -546,8 +552,6 @@
 				17ECE30628744D0A005F2A7A /* AlertUtility.swift in Sources */,
 				17ECE3112874B932005F2A7A /* PokemonDetailViewController.swift in Sources */,
 				17ECE30C28749D66005F2A7A /* PokemonTableViewCell.swift in Sources */,
-				17FE3647291655AF0054B7B6 /* Subscripiton.swift in Sources */,
-				17FE364529163BF10054B7B6 /* Test.swift in Sources */,
 				17ECE30F2874A9A0005F2A7A /* BaseTableViewCell.swift in Sources */,
 				17ECE2F92873A985005F2A7A /* PokemonResult.swift in Sources */,
 			);

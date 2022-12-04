@@ -55,6 +55,6 @@ extension PokemonDetailViewController: PokemonDetailViewPresenterDelegate {
     }
     
     func showAlert(title: String, message: String) {
-        AlertUtility.shared.showAlert(self, title: "Error", message: message)
+        AlertUtility.shared.showAlert(self, title: Constants.error, message: message)
     }
 }

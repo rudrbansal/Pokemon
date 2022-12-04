@@ -22,12 +22,10 @@ final class HomeViewPresenter {
     // MARK: Public
     
     weak var delegate: HomePresenterDelegate?
-    private let errorTitle = "Error"
 
     // MARK: Private
     
     private let service: ServiceRepresentable
-    private var nextURL: String?
 
     // MARK: Initailizers
     
@@ -41,34 +39,24 @@ final class HomeViewPresenter {
         self.delegate = delegate
     }
     
-    func isLoadingCell(for indexPath: IndexPath) -> Bool {
-        return nextURL != nil
-    }
-    
-    func getPokemonList() {
-        if let nextURL {
-            self.nextURL = nextURL
-        } else {
-            nextURL = Endpoints.shared.baseURL
-        }
-        service.sendRequestWithJSON(endpoint: nextURL!, method: .get) {[weak self] response, error in
+    func getPokemons() {
+        service.sendRequestWithJSON(endpoint: Endpoints.shared.baseURL, method: .get) {[weak self] response, error in
             guard let self = self else { return }
             if error == nil {
                 do {
                     let pokemonResult = try JSONDecoder().decode(PokemonResult.self, from: response as! Data)
-                    self.nextURL = pokemonResult.next
                     self.delegate?.showPokemonList(pokemons: pokemonResult.results!)
                 }
                 catch {
                     // Show alert that something is wrong with server
-                    self.delegate?.showAlert(title: self.errorTitle, message: error.localizedDescription)
+                    self.delegate?.showAlert(title: Constants.error, message: error.localizedDescription)
                 }
             } else if !Internet.shared.isAvailable() {
-                self.delegate?.showAlert(title: self.errorTitle, message: Internet.shared.noInternet)
+                self.delegate?.showAlert(title: Constants.error, message: Internet.shared.noInternet)
             } else {
                 // if error is network error - Show no internet connection alert
                 // else: Show general error alert
-                self.delegate?.showAlert(title: self.errorTitle, message: error?.localizedDescription ?? "Sorry, something went wrong")
+                self.delegate?.showAlert(title: Constants.error, message: error?.localizedDescription ?? "Sorry, something went wrong")
             }
         }
     }
