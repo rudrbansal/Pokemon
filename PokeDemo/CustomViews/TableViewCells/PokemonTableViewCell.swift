@@ -11,16 +11,16 @@ class PokemonTableViewCell: BaseTableViewCell {
     
     // MARK: - Outlets
     
-    @IBOutlet weak var lblTitle: UILabel!
-    @IBOutlet weak var iconImageView: UIImageView!
+    @IBOutlet weak var title: UILabel!
+    @IBOutlet weak var icon: UIImageView!
     
     // MARK: - Exposed Methods
 
     func setupData(data: Pokemon) {
-        lblTitle.text = data.name?.uppercased()
+        title.text = data.name?.uppercased()
     }
     
     func setupImage(image: UIImage){
-        iconImageView.image = image
+        icon.image = image
     }
 }

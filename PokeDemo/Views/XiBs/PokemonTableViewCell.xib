@@ -39,12 +39,6 @@
                                     </userDefinedRuntimeAttribute>
                                 </userDefinedRuntimeAttributes>
                             </imageView>
-                            <label hidden="YES" opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="v5e-5s-ngL">
-                                <rect key="frame" x="88" y="33.666666666666664" width="318" height="14.333333333333336"/>
-                                <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="12"/>
-                                <nil key="textColor"/>
-                                <nil key="highlightedColor"/>
-                            </label>
                         </subviews>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         <constraints>
@@ -53,10 +47,7 @@
                             <constraint firstItem="isI-yW-WNi" firstAttribute="leading" secondItem="Dw8-je-srx" secondAttribute="leading" constant="8" id="fYK-X0-lV9"/>
                             <constraint firstItem="isI-yW-WNi" firstAttribute="top" secondItem="Dw8-je-srx" secondAttribute="top" constant="8" id="goS-3Y-aar"/>
                             <constraint firstItem="plb-hJ-Hle" firstAttribute="leading" secondItem="isI-yW-WNi" secondAttribute="trailing" constant="16" id="h5n-tA-oCH"/>
-                            <constraint firstItem="v5e-5s-ngL" firstAttribute="trailing" secondItem="plb-hJ-Hle" secondAttribute="trailing" id="hLz-Ke-U40"/>
-                            <constraint firstItem="v5e-5s-ngL" firstAttribute="leading" secondItem="plb-hJ-Hle" secondAttribute="leading" id="mHH-cX-yHB"/>
                             <constraint firstAttribute="bottom" secondItem="isI-yW-WNi" secondAttribute="bottom" constant="8" id="ma3-Sn-0bb"/>
-                            <constraint firstItem="v5e-5s-ngL" firstAttribute="top" secondItem="plb-hJ-Hle" secondAttribute="bottom" constant="4" id="rSX-Xg-6yB"/>
                         </constraints>
                     </view>
                 </subviews>
@@ -68,8 +59,8 @@
                 </constraints>
             </tableViewCellContentView>
             <connections>
-                <outlet property="iconImageView" destination="isI-yW-WNi" id="VSh-eU-zaC"/>
-                <outlet property="lblTitle" destination="plb-hJ-Hle" id="eAI-1m-8DF"/>
+                <outlet property="icon" destination="isI-yW-WNi" id="pS8-lK-hA1"/>
+                <outlet property="title" destination="plb-hJ-Hle" id="THY-gw-tv5"/>
             </connections>
             <point key="canvasLocation" x="136.92307692307691" y="26.303317535545023"/>
         </tableViewCell>
