@@ -17,7 +17,7 @@ class PokemonListViewController: BaseViewController {
     // MARK: - Properties
     
     // MARK: - Private
-
+    
     private let presenter = PokemonListPresenter()
     private var pokemons: [Pokemon]? = [Pokemon]()
     
@@ -26,6 +26,8 @@ class PokemonListViewController: BaseViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         tableView.register(UINib(nibName: PokemonListCell.cellIdentifier(), bundle: nil), forCellReuseIdentifier: PokemonListCell.cellIdentifier())
+        tableView.dataSource = self
+        tableView.delegate = self
         presenter.setViewDelegate(delegate: self)
         presenter.viewDidLoad()
     }
@@ -33,7 +35,7 @@ class PokemonListViewController: BaseViewController {
 
 // MARK: - Extensions
 
-extension PokemonListViewController: UITableViewDataSource, UITableViewDelegate {
+extension PokemonListViewController: UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return pokemons?.count ?? 0
@@ -41,17 +43,22 @@ extension PokemonListViewController: UITableViewDataSource, UITableViewDelegate 
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: PokemonListCell.cellIdentifier()) as! PokemonListCell
-        let pokemon = pokemons![indexPath.row]
-        cell.setupData(data: pokemon)
-        presenter.didSetupCellWith(pokemon: pokemon) { image in
-            if let image = image{
-                DispatchQueue.main.async {
-                    cell.setupImage(image: image)
+        if let pokemons {
+            let pokemon = pokemons[indexPath.row]
+            cell.setupData(data: pokemon)
+            presenter.didSetupCellWith(pokemon: pokemon) { image in
+                if let image = image{
+                    DispatchQueue.main.async {
+                        cell.setupImage(image: image)
+                    }
                 }
             }
         }
         return cell
     }
+}
+
+extension PokemonListViewController: UITableViewDelegate {
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let detailViewController: PokemonDetailViewController = moveToViewController(storyboard: "Main", destination: PokemonDetailViewController.identifier()) as! PokemonDetailViewController
@@ -64,8 +71,6 @@ extension PokemonListViewController: PokemonListPresenterDelegate {
     
     func show(_ pokemons: [Pokemon]) {
         self.pokemons?.append(contentsOf: pokemons)
-        tableView.dataSource = self
-        tableView.delegate = self
         tableView.reloadData()
     }
     
