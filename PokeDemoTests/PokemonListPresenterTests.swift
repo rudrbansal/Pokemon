@@ -9,15 +9,15 @@ import XCTest
 @testable import PokeDemo
 import Alamofire
 
-final class HomeViewPresenterTests: XCTestCase {
+final class PokemonListPresenterTests: XCTestCase {
     
-    var presenter: HomeViewPresenter!
+    var presenter: PokemonListPresenter!
     
     // MARK: - Lifecycle
     
     override func setUp() {
         super.setUp()
-        presenter = HomeViewPresenter(service: Service.shared)
+        presenter = PokemonListPresenter(service: Service.shared)
     }
     
     override func tearDown() {
@@ -43,8 +43,8 @@ final class HomeViewPresenterTests: XCTestCase {
         let mockService = MockService()
         
         // When
-        presenter = HomeViewPresenter(service: mockService)
-        presenter.getPokemons()
+        presenter = PokemonListPresenter(service: mockService)
+        presenter.viewDidLoad()
         
         // Then
         XCTAssertEqual(mockService.sendRequestWithJSONIsCalledIndex, 1)
@@ -55,16 +55,16 @@ final class HomeViewPresenterTests: XCTestCase {
         // Given
         let mockService = MockService()
         let mockDelegate = MockPresenterDelegate()
-        presenter = HomeViewPresenter(service: mockService)
+        presenter = PokemonListPresenter(service: mockService)
         presenter.setViewDelegate(delegate: mockDelegate)
-        presenter.getPokemons()
+        presenter.viewDidLoad()
         
         // When service sends successful response
         let stubPokemons = [Pokemon.init(name: "test", url: "Test URL")]
 //        mockService.onCompletion?(stubPokemons, nil)
         
         // Then
-        XCTAssertEqual(mockDelegate.pokemonList, stubPokemons)
+        XCTAssertEqual(mockDelegate.pokemons, stubPokemons)
         // Check the mockDelegate showPokemonList function is called with right Pokemon array
     }
     
@@ -72,9 +72,9 @@ final class HomeViewPresenterTests: XCTestCase {
         // Given
         let mockService = MockService()
         let mockDelegate = MockPresenterDelegate()
-        presenter = HomeViewPresenter(service: mockService)
+        presenter = PokemonListPresenter(service: mockService)
         presenter.setViewDelegate(delegate: mockDelegate)
-        presenter.getPokemons()
+        presenter.viewDidLoad()
         
         // When service sends successful response
         mockService.onCompletion?(nil, TestError())
@@ -90,9 +90,9 @@ final class HomeViewPresenterTests: XCTestCase {
         // Given
         let mockService = MockService()
         let mockDelegate = MockPresenterDelegate()
-        presenter = HomeViewPresenter(service: mockService)
+        presenter = PokemonListPresenter(service: mockService)
         presenter.setViewDelegate(delegate: mockDelegate)
-        presenter.getPokemons()
+        presenter.viewDidLoad()
         
         // When service sends successful response
         mockService.onCompletion?(nil, TestError())
@@ -110,8 +110,8 @@ final class HomeViewPresenterTests: XCTestCase {
         let mockService = MockService()
         
         // When
-        presenter = HomeViewPresenter(service: mockService)
-        presenter.getPokemons()
+        presenter = PokemonListPresenter(service: mockService)
+        presenter.viewDidLoad()
         
         // Then
         XCTAssertEqual(mockService.sendRequestWithJSONIsCalledIndex, 1)
@@ -122,15 +122,15 @@ struct TestError: Error{
     
 }
 
-final class MockPresenterDelegate: HomePresenterDelegate {
+final class MockPresenterDelegate: PokemonListViewPresenterDelegate {
         
     var showAlertCalled: Bool = false
     var showAlertTitle: String?
     var showAlertMessage: String?
-    var pokemonList: [Pokemon]?
+    var pokemons: [Pokemon]?
     
-    func showPokemonList(pokemons: [Pokemon]) {
-        pokemonList = pokemons
+    func show(_ pokemons: [Pokemon]) {
+        self.pokemons = pokemons
     }
     
     func showAlert(title: String, message: String) {

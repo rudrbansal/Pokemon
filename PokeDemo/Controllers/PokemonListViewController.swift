@@ -18,7 +18,7 @@ class PokemonListViewController: BaseViewController {
     
     // MARK: - Private
 
-    private let presenter = HomeViewPresenter()
+    private let presenter = PokemonListPresenter()
     private var pokemons: [Pokemon]? = [Pokemon]()
     
     // MARK: - View Life Cycle
@@ -27,7 +27,7 @@ class PokemonListViewController: BaseViewController {
         super.viewDidLoad()
         tableView.register(UINib(nibName: PokemonListCell.cellIdentifier(), bundle: nil), forCellReuseIdentifier: PokemonListCell.cellIdentifier())
         presenter.setViewDelegate(delegate: self)
-        presenter.getPokemons()
+        presenter.viewDidLoad()
     }
 }
 
@@ -43,7 +43,7 @@ extension PokemonListViewController: UITableViewDataSource, UITableViewDelegate 
         let cell = tableView.dequeueReusableCell(withIdentifier: PokemonListCell.cellIdentifier()) as! PokemonListCell
         let pokemon = pokemons![indexPath.row]
         cell.setupData(data: pokemon)
-        presenter.getPokemonInfo(pokemon: pokemon) { image in
+        presenter.didSetupCellWith(pokemon: pokemon) { image in
             if let image = image{
                 DispatchQueue.main.async {
                     cell.setupImage(image: image)
@@ -60,9 +60,9 @@ extension PokemonListViewController: UITableViewDataSource, UITableViewDelegate 
     }
 }
 
-extension PokemonListViewController: HomeViewPresenterDelegate {
+extension PokemonListViewController: PokemonListPresenterDelegate {
     
-    func showPokemonList(pokemons: [Pokemon]) {
+    func show(_ pokemons: [Pokemon]) {
         self.pokemons?.append(contentsOf: pokemons)
         tableView.dataSource = self
         tableView.delegate = self
