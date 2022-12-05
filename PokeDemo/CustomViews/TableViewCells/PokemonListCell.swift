@@ -1,5 +1,5 @@
 //
-//  PokemonTableViewCell.swift
+//  PokemonListCell.swift
 //  PokeDemo
 //
 //  Created by Rudr Bansal on 05/07/22.
@@ -7,7 +7,7 @@
 
 import UIKit
 
-class PokemonTableViewCell: BaseTableViewCell {
+class PokemonListCell: BaseTableViewCell {
     
     // MARK: - Outlets
     
