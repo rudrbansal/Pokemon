@@ -12,7 +12,7 @@
         <!--PokeList-->
         <scene sceneID="tne-QT-ifu">
             <objects>
-                <viewController id="BYZ-38-t0r" customClass="HomeViewController" customModule="PokeDemo" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController id="BYZ-38-t0r" customClass="PokemonListViewController" customModule="PokeDemo" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="8bC-Xf-vdC">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -34,7 +34,7 @@
                     </view>
                     <navigationItem key="navigationItem" title="PokeList" id="Fcd-sh-2aZ"/>
                     <connections>
-                        <outlet property="pokemonTableView" destination="lZ2-uS-weL" id="89U-BO-7k3"/>
+                        <outlet property="tableView" destination="lZ2-uS-weL" id="0aR-Ik-hDh"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>

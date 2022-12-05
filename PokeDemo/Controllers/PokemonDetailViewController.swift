@@ -18,7 +18,7 @@ class PokemonDetailViewController: BaseViewController {
     
     // MARK: - Private
     
-    private let presenter = PokemonDetailPresenter(service: Service.shared)
+    private let presenter = PokemonDetailPresenter()
     
     // MARK: Public
     

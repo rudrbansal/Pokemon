@@ -8,11 +8,11 @@
 
 import UIKit
 
-class HomeViewController: BaseViewController {
+class PokemonListViewController: BaseViewController {
     
     // MARK: - IBOutlets
     
-    @IBOutlet weak var pokemonTableView: UITableView!
+    @IBOutlet weak var tableView: UITableView!
     
     // MARK: - Properties
     
@@ -25,7 +25,7 @@ class HomeViewController: BaseViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        pokemonTableView.register(UINib(nibName: PokemonTableViewCell.cellIdentifier(), bundle: nil), forCellReuseIdentifier: PokemonTableViewCell.cellIdentifier())
+        tableView.register(UINib(nibName: PokemonTableViewCell.cellIdentifier(), bundle: nil), forCellReuseIdentifier: PokemonTableViewCell.cellIdentifier())
         presenter.setViewDelegate(delegate: self)
         presenter.getPokemons()
     }
@@ -33,7 +33,7 @@ class HomeViewController: BaseViewController {
 
 // MARK: - Extensions
 
-extension HomeViewController: UITableViewDataSource, UITableViewDelegate {
+extension PokemonListViewController: UITableViewDataSource, UITableViewDelegate {
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return pokemonList?.count ?? 0
@@ -60,13 +60,13 @@ extension HomeViewController: UITableViewDataSource, UITableViewDelegate {
     }
 }
 
-extension HomeViewController: HomeViewPresenterDelegate {
+extension PokemonListViewController: HomeViewPresenterDelegate {
     
     func showPokemonList(pokemons: [Pokemon]) {
         pokemonList?.append(contentsOf: pokemons)
-        pokemonTableView.dataSource = self
-        pokemonTableView.delegate = self
-        pokemonTableView.reloadData()
+        tableView.dataSource = self
+        tableView.delegate = self
+        tableView.reloadData()
     }
     
     func showAlert(title: String, message: String) {

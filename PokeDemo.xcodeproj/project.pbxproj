@@ -20,7 +20,7 @@
 		17E6702D293B1E1D008EB850 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 17E6702C293B1E1D008EB850 /* Constants.swift */; };
 		17ECE2DE28702022005F2A7A /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 17ECE2DD28702022005F2A7A /* AppDelegate.swift */; };
 		17ECE2E028702022005F2A7A /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 17ECE2DF28702022005F2A7A /* SceneDelegate.swift */; };
-		17ECE2E228702022005F2A7A /* HomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 17ECE2E128702022005F2A7A /* HomeViewController.swift */; };
+		17ECE2E228702022005F2A7A /* PokemonListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 17ECE2E128702022005F2A7A /* PokemonListViewController.swift */; };
 		17ECE2E528702022005F2A7A /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 17ECE2E328702022005F2A7A /* Main.storyboard */; };
 		17ECE2E728702024005F2A7A /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 17ECE2E628702024005F2A7A /* Assets.xcassets */; };
 		17ECE2EA28702024005F2A7A /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 17ECE2E828702024005F2A7A /* LaunchScreen.storyboard */; };
@@ -72,7 +72,7 @@
 		17ECE2DA28702022005F2A7A /* PokeDemo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = PokeDemo.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		17ECE2DD28702022005F2A7A /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		17ECE2DF28702022005F2A7A /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
-		17ECE2E128702022005F2A7A /* HomeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewController.swift; sourceTree = "<group>"; };
+		17ECE2E128702022005F2A7A /* PokemonListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PokemonListViewController.swift; sourceTree = "<group>"; };
 		17ECE2E428702022005F2A7A /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		17ECE2E628702024005F2A7A /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		17ECE2E928702024005F2A7A /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
@@ -244,7 +244,7 @@
 			isa = PBXGroup;
 			children = (
 				17E6702A293AF0EE008EB850 /* Base */,
-				17ECE2E128702022005F2A7A /* HomeViewController.swift */,
+				17ECE2E128702022005F2A7A /* PokemonListViewController.swift */,
 				17ECE3102874B932005F2A7A /* PokemonDetailViewController.swift */,
 			);
 			path = Controllers;
@@ -536,7 +536,7 @@
 				17E6702D293B1E1D008EB850 /* Constants.swift in Sources */,
 				17ECE2FB2873ABC2005F2A7A /* Pokemon.swift in Sources */,
 				17747B332881F354003F896B /* HomeViewPresenter.swift in Sources */,
-				17ECE2E228702022005F2A7A /* HomeViewController.swift in Sources */,
+				17ECE2E228702022005F2A7A /* PokemonListViewController.swift in Sources */,
 				17ECE2F428738445005F2A7A /* Service.swift in Sources */,
 				17ECE2DE28702022005F2A7A /* AppDelegate.swift in Sources */,
 				17ECE2E028702022005F2A7A /* SceneDelegate.swift in Sources */,
