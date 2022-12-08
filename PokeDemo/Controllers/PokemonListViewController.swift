@@ -42,7 +42,7 @@ extension PokemonListViewController: UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: PokemonListCell.cellIdentifier()) as! PokemonListCell
+        guard let cell = tableView.dequeueReusableCell(withIdentifier: PokemonListCell.cellIdentifier()) as? PokemonListCell else { return UITableViewCell() }
         if let pokemons {
             let pokemon = pokemons[indexPath.row]
             cell.setupData(data: pokemon)
