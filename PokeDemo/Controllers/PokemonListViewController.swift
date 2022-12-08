@@ -12,7 +12,12 @@ class PokemonListViewController: BaseViewController {
     
     // MARK: - IBOutlets
     
-    @IBOutlet private weak var tableView: UITableView!
+    @IBOutlet private weak var tableView: UITableView! {
+        didSet {
+            tableView.register(UINib(nibName: PokemonListCell.reuseIdentifier, bundle: nil), forCellReuseIdentifier: PokemonListCell.reuseIdentifier)
+            tableView.dataSource = self
+        }
+    }
     
     // MARK: - Properties
     
@@ -25,8 +30,6 @@ class PokemonListViewController: BaseViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        tableView.register(UINib(nibName: PokemonListCell.reuseIdentifier, bundle: nil), forCellReuseIdentifier: PokemonListCell.reuseIdentifier)
-        tableView.dataSource = self
         presenter.setViewDelegate(delegate: self)
         presenter.viewDidLoad()
     }
