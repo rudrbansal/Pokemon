@@ -7,7 +7,7 @@
 
 import UIKit
 
-class PokemonListCell: BaseTableViewCell {
+class PokemonListCell: UITableViewCell {
     
     // MARK: - Outlets
     

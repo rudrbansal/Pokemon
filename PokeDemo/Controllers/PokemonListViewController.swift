@@ -25,7 +25,7 @@ class PokemonListViewController: BaseViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        tableView.register(UINib(nibName: PokemonListCell.cellIdentifier(), bundle: nil), forCellReuseIdentifier: PokemonListCell.cellIdentifier())
+        tableView.register(UINib(nibName: PokemonListCell.reuseIdentifier, bundle: nil), forCellReuseIdentifier: PokemonListCell.reuseIdentifier)
         tableView.dataSource = self
         presenter.setViewDelegate(delegate: self)
         presenter.viewDidLoad()
@@ -41,7 +41,7 @@ extension PokemonListViewController: UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        guard let cell = tableView.dequeueReusableCell(withIdentifier: PokemonListCell.cellIdentifier()) as? PokemonListCell else { return UITableViewCell() }
+        guard let cell = tableView.dequeueReusableCell(withIdentifier: PokemonListCell.reuseIdentifier) as? PokemonListCell else { return UITableViewCell() }
         if let pokemons {
             let pokemon = pokemons[indexPath.row]
             cell.setupData(data: pokemon)
