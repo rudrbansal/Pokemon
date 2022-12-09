@@ -8,13 +8,9 @@
 
 import UIKit
 
-class BaseViewController: UIViewController {
+class BaseViewController: UIViewController, ReuseIdentifying {
     
     // MARK: - Exposed Methods
-    
-    class func identifier() -> String {
-        return String(describing: self)
-    }
     
     func moveToViewController(storyboard: String, destination: String) -> UIViewController {
         let storyboard = UIStoryboard(name: storyboard, bundle: nil)
