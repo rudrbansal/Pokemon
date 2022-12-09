@@ -13,7 +13,7 @@ public protocol InternetManager {
     func isAvailable() -> Bool
 }
 
-class Internet: NSObject, InternetManager {
+final class Internet: NSObject, InternetManager {
     
     // MARK: - Singleton
     

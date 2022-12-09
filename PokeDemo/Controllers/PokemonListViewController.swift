@@ -8,7 +8,7 @@
 
 import UIKit
 
-class PokemonListViewController: BaseViewController {
+final class PokemonListViewController: BaseViewController {
     
     // MARK: - IBOutlets
     
