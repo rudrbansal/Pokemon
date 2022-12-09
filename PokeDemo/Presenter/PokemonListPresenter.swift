@@ -47,22 +47,20 @@ final class PokemonListPresenter {
         service.sendRequestWithJSON(endpoint: pokemon.url!, method: .get) { response, error in
             if error == nil {
                 do {
-                    if let data = response as? Data{
-                        let sprite = try JSONDecoder().decode(Sprite.self, from: data)
-                        if let frontValue = sprite.sprites?.front_default,
-                           let url = URL(string: frontValue) {
-                            URLSession.shared.dataTask(with: url) { data, response, error in
-                                guard let imageData = data else { return }
-                                completion(UIImage(data: imageData))
-                            }.resume()
-                        }
-                        else{
-                            completion(nil)
-                        }
-                    }
-                    else {
+                    guard let data = response as? Data else {
                         completion(nil)
+                        return
                     }
+                    let sprite = try JSONDecoder().decode(Sprite.self, from: data)
+                    guard let frontValue = sprite.sprites?.front_default,
+                          let url = URL(string: frontValue) else {
+                        completion(nil)
+                        return
+                    }
+                    URLSession.shared.dataTask(with: url) { data, response, error in
+                        guard let imageData = data else { return }
+                        completion(UIImage(data: imageData))
+                    }.resume()
                 }
                 catch {
                     completion(nil)
