@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct Pokemon: Decodable, Equatable {
+struct Pokemon: Decodable {
     var name: String?
     var url: String?
 }
