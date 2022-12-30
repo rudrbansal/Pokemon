@@ -52,12 +52,9 @@ final class PokemonListPresenter {
                         return
                     }
                     let attributes = try JSONDecoder().decode(PokemonAttributes.self, from: data)
-                    guard let frontValue = attributes.attributes?.frontImage,
-                          let url = URL(string: frontValue) else {
-                        completion(nil)
-                        return
-                    }
-                    URLSession.shared.dataTask(with: url) { data, response, error in
+                    let frontValue = attributes.attributes.frontImage
+                    let url = URL(string: frontValue)
+                    URLSession.shared.dataTask(with: url ?? URL(fileURLWithPath: "")) { data, response, error in
                         guard let imageData = data else { return }
                         completion(UIImage(data: imageData))
                     }.resume()
