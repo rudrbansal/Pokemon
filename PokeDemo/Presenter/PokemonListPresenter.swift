@@ -13,15 +13,13 @@ protocol PokemonListPresenterDelegate: AnyObject {
     func showAlert(title: String, message: String)
 }
 
-typealias PokemonListViewPresenterDelegate = PokemonListPresenterDelegate & UIViewController
-
 final class PokemonListPresenter {
     
     // MARK: Properties
     
     // MARK: Public
     
-    weak var delegate: PokemonListViewPresenterDelegate?
+    weak var delegate: PokemonListPresenterDelegate?
     
     // MARK: Private
     
@@ -39,7 +37,7 @@ final class PokemonListPresenter {
         getPokemons()
     }
     
-    func setViewDelegate(delegate: PokemonListViewPresenterDelegate) {
+    func setViewDelegate(delegate: PokemonListPresenterDelegate) {
         self.delegate = delegate
     }
     
