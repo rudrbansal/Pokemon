@@ -17,7 +17,7 @@ final class PokemonListCell: UITableViewCell {
     // MARK: - Exposed Methods
 
     func setupData(data: Pokemon) {
-        title.text = data.name?.uppercased()
+        title.text = data.name.uppercased()
     }
     
     func setupImage(image: UIImage){

@@ -44,7 +44,7 @@ final class PokemonListPresenter {
     }
     
     func didSetupCellWith(pokemon: Pokemon, completion: @escaping (UIImage?) -> Void) {
-        service.sendRequestWithJSON(endpoint: pokemon.url!, method: .get) { response, error in
+        service.sendRequestWithJSON(endpoint: pokemon.url, method: .get) { response, error in
             if error == nil {
                 do {
                     guard let data = response as? Data else {
@@ -78,7 +78,8 @@ final class PokemonListPresenter {
             guard let self = self else { return }
             if error == nil {
                 do {
-                    let pokemonResult = try JSONDecoder().decode(PokemonResult.self, from: response as! Data)
+                    guard let pokemonResponse = response else { return }
+                    let pokemonResult = try JSONDecoder().decode(PokemonResult.self, from: pokemonResponse as! Data)
                     self.delegate?.show(pokemonResult.results!)
                 }
                 catch {

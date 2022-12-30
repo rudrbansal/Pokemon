@@ -8,6 +8,6 @@
 import Foundation
 
 struct Pokemon: Decodable {
-    var name: String?
-    var url: String?
+    var name: String
+    var url: String
 }
