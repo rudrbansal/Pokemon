@@ -27,17 +27,9 @@ final class Service: ServiceRepresentable {
     // MARK: - Exposed Methods
     
     func sendRequestWithJSON(endpoint: String, method: HTTPMethod, parameters: [String:Any]? = nil, header: String? = nil, _ onCompletion: @escaping ( _ response: Any?, _ error: Error?) -> Void) {
-        if Internet.shared.isAvailable() {
-            AF.request(endpoint, method: method, parameters: parameters, encoding: URLEncoding.default, headers: nil, interceptor: nil).response { responseHandler in
-                guard let data = responseHandler.data else { return }
-                onCompletion(data, responseHandler.error)
-            }
-        } else {
-            let error = ErrorResponse()
-            onCompletion(nil, error)
+        AF.request(endpoint, method: method, parameters: parameters, encoding: URLEncoding.default, headers: nil, interceptor: nil).response { responseHandler in
+            guard let data = responseHandler.data else { return }
+            onCompletion(data, responseHandler.error)
         }
     }
-}
-
-struct ErrorResponse: Error {
 }
