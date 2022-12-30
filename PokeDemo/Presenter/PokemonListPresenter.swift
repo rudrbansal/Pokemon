@@ -80,7 +80,7 @@ final class PokemonListPresenter {
             do {
                 guard let pokemonResponse = response else { return }
                 let pokemonResult = try JSONDecoder().decode(PokemonResult.self, from: pokemonResponse as! Data)
-                self.delegate?.show(pokemonResult.results!)
+                self.delegate?.show(pokemonResult.results)
             }
             catch {
                 self.delegate?.showAlert(title: Constants.error, message: error.localizedDescription)

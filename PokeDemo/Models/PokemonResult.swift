@@ -8,8 +8,8 @@
 import Foundation
 
 struct PokemonResult: Decodable {
-    var count: Int?
-    var next: String?
+    var count: Int
+    var next: String
     var previous: String?
-    var results: [Pokemon]?
+    var results: [Pokemon]
 }
