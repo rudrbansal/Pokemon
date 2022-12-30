@@ -51,8 +51,8 @@ final class PokemonListPresenter {
                         completion(nil)
                         return
                     }
-                    let sprite = try JSONDecoder().decode(Sprite.self, from: data)
-                    guard let frontValue = sprite.sprites?.front_default,
+                    let attributes = try JSONDecoder().decode(PokemonAttributes.self, from: data)
+                    guard let frontValue = attributes.attributes?.frontImage,
                           let url = URL(string: frontValue) else {
                         completion(nil)
                         return

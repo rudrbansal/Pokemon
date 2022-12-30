@@ -29,13 +29,13 @@ final class PokemonListPresenterTests: XCTestCase {
     
     func testDelegateSetsValidValue(){
         // Given
-        let mockDelegate = MockPresenterDelegate()
+        let mockDelegate = MockPokemonListViewPresenterDelegate()
         
         // When
         presenter.setViewDelegate(delegate: mockDelegate)
         
         // Then
-        XCTAssertTrue(presenter.delegate is MockPresenterDelegate)
+        XCTAssertTrue(presenter.delegate is MockPokemonListViewPresenterDelegate)
     }
     
     func testGetPokemonListCallsAPI(){
@@ -54,24 +54,26 @@ final class PokemonListPresenterTests: XCTestCase {
     func testGetPokemonListReturnsSuccessFromAPI(){
         // Given
         let mockService = MockService()
-        let mockDelegate = MockPresenterDelegate()
+        let mockDelegate = MockPokemonListViewPresenterDelegate()
         presenter = PokemonListPresenter(service: mockService)
         presenter.setViewDelegate(delegate: mockDelegate)
         presenter.viewDidLoad()
         
         // When service sends successful response
-        let stubPokemons = [Pokemon.init(name: "test", url: "Test URL")]
-//        mockService.onCompletion?(stubPokemons, nil)
+        let stubPokemons = mockService.loadJson(fileName: "PokemonList")
+        var pokemonResult: PokemonResult = PokemonResult()
+        pokemonResult.results = stubPokemons
+        let pokemonData = try? JSONEncoder().encode(pokemonResult)
+        mockService.onCompletion?(pokemonData, nil)
         
         // Then
         XCTAssertEqual(mockDelegate.pokemons, stubPokemons)
-        // Check the mockDelegate showPokemonList function is called with right Pokemon array
     }
     
     func testGetPokemonListReturnsErrorFromAPI(){
         // Given
         let mockService = MockService()
-        let mockDelegate = MockPresenterDelegate()
+        let mockDelegate = MockPokemonListViewPresenterDelegate()
         presenter = PokemonListPresenter(service: mockService)
         presenter.setViewDelegate(delegate: mockDelegate)
         presenter.viewDidLoad()
@@ -83,27 +85,40 @@ final class PokemonListPresenterTests: XCTestCase {
         XCTAssertEqual(mockDelegate.showAlertCalled, true)
         XCTAssertEqual(mockDelegate.showAlertTitle, Constants.error)
         XCTAssertEqual(mockDelegate.showAlertMessage, "The operation couldn’t be completed. (PokeDemoTests.TestError error 1.)")
-        // Check the mockDelegate showPokemonList function is called with right Pokemon array
     }
     
-    func testGetPokemonListReturnsNoInternetFailureFromAPI(){
+        func testGetPokemonListReturnsNoInternetFailureFromAPI(){
+            // Given
+            let mockService = MockService()
+            let mockDelegate = MockPokemonListViewPresenterDelegate()
+            presenter = PokemonListPresenter(service: mockService)
+            presenter.setViewDelegate(delegate: mockDelegate)
+            presenter.viewDidLoad()
+    
+            // When service sends successful response
+            mockService.onCompletion?(nil, TestError())
+    
+            // Then
+            XCTAssertEqual(mockDelegate.showAlertCalled, true)
+            XCTAssertEqual(mockDelegate.showAlertTitle, Constants.error)
+//            XCTAssertEqual(mockDelegate.showAlertMessage, Internet.shared.noInternet)
+        }
+    
+//    func testGetPokemonListReturnsInvalidDataFromAPI(){
+//// Given
+//        let mockService = MockService()
+//    }
+    
+    func testGetPokemonListReturnsEmptyArrayFromAPI() {
         // Given
         let mockService = MockService()
-        let mockDelegate = MockPresenterDelegate()
-        presenter = PokemonListPresenter(service: mockService)
+        let mockDelegate = MockPokemonListViewPresenterDelegate()
+        presenter = PokemonListPresenter()
         presenter.setViewDelegate(delegate: mockDelegate)
         presenter.viewDidLoad()
         
-        // When service sends successful response
-        mockService.onCompletion?(nil, TestError())
-        
-        // Then
-        XCTAssertEqual(mockDelegate.showAlertCalled, true)
-        XCTAssertEqual(mockDelegate.showAlertTitle, Constants.error)
-        XCTAssertEqual(mockDelegate.showAlertMessage, Internet.shared.noInternet)
+        //
     }
-    
-    func testGetPokemonListReturnsInvalidDataFromAPI(){}
     
     func testGetPokemonListReturnsGeneralErrorFromAPI(){
         // Given
@@ -122,8 +137,8 @@ struct TestError: Error{
     
 }
 
-final class MockPresenterDelegate: PokemonListViewPresenterDelegate {
-        
+final class MockPokemonListViewPresenterDelegate: PokemonListViewPresenterDelegate {
+    
     var showAlertCalled: Bool = false
     var showAlertTitle: String?
     var showAlertMessage: String?
@@ -140,3 +155,14 @@ final class MockPresenterDelegate: PokemonListViewPresenterDelegate {
     }
 }
 
+//extension Pokemon: Encodable, Equatable {
+//    public static func == (lhs: Pokemon, rhs: Pokemon) -> Bool {
+//        <#code#>
+//    }
+//    
+//    public func encode(to encoder: Encoder) throws {
+//        <#code#>
+//    }
+//    
+//    
+//}
