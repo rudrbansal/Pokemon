@@ -19,7 +19,7 @@ final class PokemonListPresenter {
     
     // MARK: Public
     
-    weak var delegate: PokemonListPresenterDelegate?
+    private weak var delegate: PokemonListPresenterDelegate?
     
     // MARK: Private
     
