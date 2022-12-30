@@ -24,7 +24,7 @@ final class PokemonListViewController: BaseViewController {
     // MARK: - Private
     
     private let presenter = PokemonListPresenter()
-    private var pokemons: [Pokemon]? = [Pokemon]()
+    private var pokemons: [Pokemon] = []
     
     // MARK: - View Life Cycle
     
@@ -40,12 +40,11 @@ final class PokemonListViewController: BaseViewController {
 extension PokemonListViewController: UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return pokemons?.count ?? 0
+        return pokemons.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         guard let cell = tableView.dequeueReusableCell(withIdentifier: PokemonListCell.reuseIdentifier) as? PokemonListCell else { return UITableViewCell() }
-        guard let pokemons else { return PokemonListCell() }
         if indexPath.row <= pokemons.count {
             cell.setupData(data: pokemons[indexPath.row])
             presenter.didSetupCellWith(pokemon: pokemons[indexPath.row]) { image in
@@ -63,7 +62,7 @@ extension PokemonListViewController: UITableViewDataSource {
 extension PokemonListViewController: PokemonListPresenterDelegate {
     
     func show(_ pokemons: [Pokemon]) {
-        self.pokemons?.append(contentsOf: pokemons)
+        self.pokemons.append(contentsOf: pokemons)
         tableView.reloadData()
     }
     
