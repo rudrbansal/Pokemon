@@ -7,7 +7,6 @@
 
 import XCTest
 @testable import PokeDemo
-import Alamofire
 
 final class PokemonListPresenterTests: XCTestCase {
     
