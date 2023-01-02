@@ -30,7 +30,7 @@ final class PokemonListViewController: BaseViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        presenter.setViewDelegate(delegate: self)
+        presenter.delegate = self
         presenter.viewDidLoad()
     }
 }

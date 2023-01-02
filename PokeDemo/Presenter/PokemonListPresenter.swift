@@ -19,7 +19,7 @@ final class PokemonListPresenter {
     
     // MARK: Public
     
-    private weak var delegate: PokemonListPresenterDelegate?
+    weak var delegate: PokemonListPresenterDelegate?
     
     // MARK: Private
     
@@ -35,10 +35,6 @@ final class PokemonListPresenter {
     
     func viewDidLoad() {
         getPokemons()
-    }
-    
-    func setViewDelegate(delegate: PokemonListPresenterDelegate) {
-        self.delegate = delegate
     }
     
     func didSetupCellWith(pokemon: Pokemon, completion: @escaping (UIImage?) -> Void) {
