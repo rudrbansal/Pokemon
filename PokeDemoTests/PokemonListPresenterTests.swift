@@ -32,7 +32,7 @@ final class PokemonListPresenterTests: XCTestCase {
         let mockDelegate = MockPokemonListViewPresenterDelegate()
         
         // When
-        presenter.setViewDelegate(delegate: mockDelegate)
+        presenter.delegate = mockDelegate
         
         // Then
         XCTAssertTrue(presenter.delegate is MockPokemonListViewPresenterDelegate)
@@ -54,7 +54,7 @@ final class PokemonListPresenterTests: XCTestCase {
         // Given
         let mockDelegate = MockPokemonListViewPresenterDelegate()
         presenter = PokemonListPresenter(service: mockService)
-        presenter.setViewDelegate(delegate: mockDelegate)
+        presenter.delegate = mockDelegate
         presenter.viewDidLoad()
         
         // When service sends successful response
@@ -72,7 +72,7 @@ final class PokemonListPresenterTests: XCTestCase {
         // Given
         let mockDelegate = MockPokemonListViewPresenterDelegate()
         presenter = PokemonListPresenter(service: mockService)
-        presenter.setViewDelegate(delegate: mockDelegate)
+        presenter.delegate = mockDelegate
         presenter.viewDidLoad()
         
         // When service sends successful response
@@ -110,7 +110,7 @@ final class PokemonListPresenterTests: XCTestCase {
         // Given
         let mockDelegate = MockPokemonListViewPresenterDelegate()
         presenter = PokemonListPresenter()
-        presenter.setViewDelegate(delegate: mockDelegate)
+        presenter.delegate = mockDelegate
         presenter.viewDidLoad()
         
         //
@@ -132,7 +132,7 @@ struct TestError: Error{
     
 }
 
-final class MockPokemonListViewPresenterDelegate: PokemonListViewPresenterDelegate {
+final class MockPokemonListViewPresenterDelegate: PokemonListPresenterDelegate {
     
     var showAlertCalled: Bool = false
     var showAlertTitle: String?
