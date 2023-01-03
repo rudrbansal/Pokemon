@@ -11,12 +11,13 @@ import XCTest
 final class PokemonListPresenterTests: XCTestCase {
     
     var presenter: PokemonListPresenter!
+    let mockService = MockService()
     
     // MARK: - Lifecycle
     
     override func setUp() {
         super.setUp()
-        presenter = PokemonListPresenter(service: Service.shared)
+        presenter = PokemonListPresenter(service: mockService)
     }
     
     override func tearDown() {
@@ -39,7 +40,6 @@ final class PokemonListPresenterTests: XCTestCase {
     
     func testGetPokemonListCallsAPI(){
         // Given
-        let mockService = MockService()
         
         // When
         presenter = PokemonListPresenter(service: mockService)
@@ -52,7 +52,6 @@ final class PokemonListPresenterTests: XCTestCase {
     
     func testGetPokemonListReturnsSuccessFromAPI(){
         // Given
-        let mockService = MockService()
         let mockDelegate = MockPokemonListViewPresenterDelegate()
         presenter = PokemonListPresenter(service: mockService)
         presenter.setViewDelegate(delegate: mockDelegate)
@@ -71,7 +70,6 @@ final class PokemonListPresenterTests: XCTestCase {
     
     func testGetPokemonListReturnsErrorFromAPI(){
         // Given
-        let mockService = MockService()
         let mockDelegate = MockPokemonListViewPresenterDelegate()
         presenter = PokemonListPresenter(service: mockService)
         presenter.setViewDelegate(delegate: mockDelegate)
@@ -110,7 +108,6 @@ final class PokemonListPresenterTests: XCTestCase {
     
     func testGetPokemonListReturnsEmptyArrayFromAPI() {
         // Given
-        let mockService = MockService()
         let mockDelegate = MockPokemonListViewPresenterDelegate()
         presenter = PokemonListPresenter()
         presenter.setViewDelegate(delegate: mockDelegate)
@@ -121,7 +118,6 @@ final class PokemonListPresenterTests: XCTestCase {
     
     func testGetPokemonListReturnsGeneralErrorFromAPI(){
         // Given
-        let mockService = MockService()
         
         // When
         presenter = PokemonListPresenter(service: mockService)
