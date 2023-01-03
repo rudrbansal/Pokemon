@@ -50,7 +50,7 @@ final class PokemonListPresenterTests: XCTestCase {
         XCTAssertEqual(mockService.sendRequestWithJSONEndPoint, "https://pokeapi.co/api/v2/pokemon")
     }
     
-    func testGetPokemonListReturnsSuccessFromAPI(){
+    func testGetPokemonListReturnsSuccess(){
         // Given
         let mockDelegate = MockPokemonListViewPresenterDelegate()
         presenter = PokemonListPresenter(service: mockService)
@@ -68,7 +68,7 @@ final class PokemonListPresenterTests: XCTestCase {
         XCTAssertEqual(mockDelegate.pokemons, stubPokemons)
     }
     
-    func testGetPokemonListReturnsErrorFromAPI(){
+    func testGetPokemonListReturnsError(){
         // Given
         let mockDelegate = MockPokemonListViewPresenterDelegate()
         presenter = PokemonListPresenter(service: mockService)
@@ -116,7 +116,7 @@ final class PokemonListPresenterTests: XCTestCase {
         //
     }
     
-    func testGetPokemonListReturnsGeneralErrorFromAPI(){
+    func testGetPokemonListReturnsGeneralError(){
         // Given
         
         // When
