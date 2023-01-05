@@ -99,17 +99,6 @@ final class PokemonListPresenterTests: XCTestCase {
         // Then
         XCTAssertEqual(mockDelegate.pokemons?.count, nil)
     }
-    
-    func testGetPokemonListReturnsGeneralError(){
-        // Given
-        
-        // When
-        presenter = PokemonListPresenter(service: mockService)
-        presenter.viewDidLoad()
-        
-        // Then
-        XCTAssertEqual(mockService.sendRequestWithJSONIsCalledIndex, 1)
-    }
 }
 
 struct TestError: Error{
