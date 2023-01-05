@@ -59,8 +59,7 @@ final class PokemonListPresenterTests: XCTestCase {
         
         // When service sends successful response
         let stubPokemons = mockService.loadJson(fileName: "PokemonList")
-        var pokemonResult: PokemonResult = PokemonResult()
-        pokemonResult.results = stubPokemons
+        var pokemonResult = PokemonResult.init(count: stubPokemons?.count ?? 0, next: "", results: stubPokemons ?? [])
         let pokemonData = try? JSONEncoder().encode(pokemonResult)
         mockService.onCompletion?(pokemonData, nil)
         
@@ -150,14 +149,19 @@ final class MockPokemonListViewPresenterDelegate: PokemonListPresenterDelegate {
     }
 }
 
-//extension Pokemon: Encodable, Equatable {
-//    public static func == (lhs: Pokemon, rhs: Pokemon) -> Bool {
-//        <#code#>
-//    }
-//    
-//    public func encode(to encoder: Encoder) throws {
-//        <#code#>
-//    }
-//    
-//    
-//}
+extension PokemonResult: Encodable {
+    public func encode(to encoder: Encoder) throws {
+        
+    }
+}
+
+extension Pokemon: Equatable {
+    
+    public static func == (lhs: Pokemon, rhs: Pokemon) -> Bool {
+        return true
+    }
+    
+    public func encode(to encoder: Encoder) throws {
+        
+    }
+}
