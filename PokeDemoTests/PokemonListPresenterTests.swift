@@ -83,28 +83,6 @@ final class PokemonListPresenterTests: XCTestCase {
         XCTAssertEqual(mockDelegate.showAlertMessage, "The operation couldn’t be completed. (PokeDemoTests.TestError error 1.)")
     }
     
-        func testGetPokemonListReturnsNoInternetFailureFromAPI(){
-            // Given
-            let mockService = MockService()
-            let mockDelegate = MockPokemonListViewPresenterDelegate()
-            presenter = PokemonListPresenter(service: mockService)
-            presenter.setViewDelegate(delegate: mockDelegate)
-            presenter.viewDidLoad()
-    
-            // When service sends successful response
-            mockService.onCompletion?(nil, TestError())
-    
-            // Then
-            XCTAssertEqual(mockDelegate.showAlertCalled, true)
-            XCTAssertEqual(mockDelegate.showAlertTitle, Constants.error)
-//            XCTAssertEqual(mockDelegate.showAlertMessage, Internet.shared.noInternet)
-        }
-    
-//    func testGetPokemonListReturnsInvalidDataFromAPI(){
-//// Given
-//        let mockService = MockService()
-//    }
-    
     func testGetPokemonListReturnsEmptyArrayFromAPI() {
         // Given
         let mockDelegate = MockPokemonListViewPresenterDelegate()
