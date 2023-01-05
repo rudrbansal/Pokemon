@@ -83,14 +83,21 @@ final class PokemonListPresenterTests: XCTestCase {
         XCTAssertEqual(mockDelegate.showAlertMessage, "The operation couldn’t be completed. (PokeDemoTests.TestError error 1.)")
     }
     
-    func testGetPokemonListReturnsEmptyArrayFromAPI() {
+    func testGetPokemonListReturnsEmptyArray() {
         // Given
         let mockDelegate = MockPokemonListViewPresenterDelegate()
         presenter = PokemonListPresenter()
         presenter.delegate = mockDelegate
         presenter.viewDidLoad()
         
-        //
+        // When service sends successful response
+        let stubPokemons: [Pokemon] = []
+        var pokemonResult = PokemonResult.init(count: stubPokemons.count , next: "", results: stubPokemons)
+        let pokemonData = try? JSONEncoder().encode(pokemonResult)
+        mockService.onCompletion?(pokemonData, nil)
+        
+        // Then
+        XCTAssertEqual(mockDelegate.pokemons?.count, nil)
     }
     
     func testGetPokemonListReturnsGeneralError(){
