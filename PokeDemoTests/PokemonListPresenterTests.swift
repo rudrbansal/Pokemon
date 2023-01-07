@@ -59,7 +59,7 @@ final class PokemonListPresenterTests: XCTestCase {
         
         // When service sends successful response
         let stubPokemons = mockService.loadJson(fileName: "PokemonList")
-        var pokemonResult = PokemonResult.init(count: stubPokemons?.count ?? 0, next: "", results: stubPokemons ?? [])
+        let pokemonResult = PokemonResult.init(count: stubPokemons?.count ?? 0, next: "", results: stubPokemons ?? [])
         let pokemonData = try? JSONEncoder().encode(pokemonResult)
         mockService.onCompletion?(pokemonData, nil)
         
@@ -92,7 +92,7 @@ final class PokemonListPresenterTests: XCTestCase {
         
         // When service sends successful response
         let stubPokemons: [Pokemon] = []
-        var pokemonResult = PokemonResult.init(count: stubPokemons.count , next: "", results: stubPokemons)
+        let pokemonResult = PokemonResult.init(count: stubPokemons.count , next: "", results: stubPokemons)
         let pokemonData = try? JSONEncoder().encode(pokemonResult)
         mockService.onCompletion?(pokemonData, nil)
         
@@ -125,17 +125,24 @@ final class MockPokemonListViewPresenterDelegate: PokemonListPresenterDelegate {
 
 extension PokemonResult: Encodable {
     public func encode(to encoder: Encoder) throws {
+        var container = encoder.container(keyedBy: CodingKeys.self)
+        try container.encode(count, forKey: .count)
+        try container.encode(next, forKey: .next)
+        try container.encode(previous, forKey: .previous)
+        try container.encode(results, forKey: .results)
         
     }
 }
 
-extension Pokemon: Equatable {
+extension Pokemon: Encodable, Equatable {
     
     public static func == (lhs: Pokemon, rhs: Pokemon) -> Bool {
         return true
     }
     
     public func encode(to encoder: Encoder) throws {
-        
+        var container = encoder.container(keyedBy: CodingKeys.self)
+        try container.encode(name, forKey: .name)
+        try container.encode(url, forKey: .url)
     }
 }

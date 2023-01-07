@@ -10,4 +10,9 @@ import Foundation
 struct Pokemon: Decodable {
     var name: String
     var url: String
+    
+    enum CodingKeys: String, CodingKey {
+        case name
+        case url
+    }
 }
