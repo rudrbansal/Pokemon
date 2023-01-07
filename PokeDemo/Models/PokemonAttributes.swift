@@ -10,19 +10,11 @@ import Foundation
 struct PokemonAttributes: Decodable {
     var name: String
     var id: Int
-    var attributes: ImageAttribute
+    var attributes: PokemonImageAttribute
     
     enum CodingKeys: String, CodingKey {
         case name
         case id
         case attributes = "sprites"
-    }
-}
-
-struct ImageAttribute: Decodable {
-    var frontImage: String
-    
-    enum CodingKeys: String, CodingKey {
-        case frontImage = "front_default"
     }
 }
