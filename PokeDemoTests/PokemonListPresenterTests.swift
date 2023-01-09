@@ -74,7 +74,7 @@ final class PokemonListPresenterTests: XCTestCase {
         presenter.delegate = mockDelegate
         presenter.viewDidLoad()
         
-        // When service sends successful response
+        // When service sends error
         mockService.onCompletion?(nil, TestError())
         
         // Then
@@ -90,7 +90,7 @@ final class PokemonListPresenterTests: XCTestCase {
         presenter.delegate = mockDelegate
         presenter.viewDidLoad()
         
-        // When service sends successful response
+        // When service sends empty array in response
         let stubPokemons: [Pokemon] = []
         let pokemonResult = PokemonResult.init(count: stubPokemons.count , next: "", results: stubPokemons)
         let pokemonData = try? JSONEncoder().encode(pokemonResult)
