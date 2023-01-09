@@ -6,7 +6,6 @@
 //
 
 import Foundation
-import UIKit
 
 protocol PokemonListPresenterDelegate: AnyObject {
     func show(_ pokemons: [Pokemon])
@@ -37,7 +36,7 @@ final class PokemonListPresenter {
         getPokemons()
     }
     
-    func didSetupCellWith(pokemon: Pokemon, completion: @escaping (UIImage?) -> Void) {
+    func didSetupCellWith(pokemon: Pokemon, completion: @escaping (Data?) -> Void) {
         service.sendRequestWithJSON(endpoint: pokemon.url, method: .get) { response, error in
             guard error == nil else {
                 completion(nil)
@@ -53,7 +52,7 @@ final class PokemonListPresenter {
                 let url = URL(string: frontValue)
                 URLSession.shared.dataTask(with: url ?? URL(fileURLWithPath: "")) { data, response, error in
                     guard let imageData = data else { return }
-                    completion(UIImage(data: imageData))
+                    completion(imageData)
                 }.resume()
             }
             catch {

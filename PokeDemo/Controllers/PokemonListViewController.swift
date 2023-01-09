@@ -49,7 +49,7 @@ extension PokemonListViewController: UITableViewDataSource {
         presenter.didSetupCellWith(pokemon: pokemons[indexPath.row]) { image in
             if let image = image{
                 DispatchQueue.main.async {
-                    cell.setupImage(image: image)
+                    cell.setupImage(image: UIImage(data: image) ?? UIImage())
                 }
             }
         }
