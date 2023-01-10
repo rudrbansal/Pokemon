@@ -16,3 +16,4 @@ struct Pokemon: Decodable {
         case url
     }
 }
+

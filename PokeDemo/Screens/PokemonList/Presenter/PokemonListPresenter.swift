@@ -12,7 +12,13 @@ protocol PokemonListPresenterDelegate: AnyObject {
     func showAlert(title: String, message: String)
 }
 
+
 final class PokemonListPresenter {
+    
+    private enum Constant {
+        static let error = "Error"
+        static let url = "https://pokeapi.co/api/v2/pokemon"
+    }
     
     // MARK: Properties
     
@@ -37,23 +43,20 @@ final class PokemonListPresenter {
     }
     
     func didSetupCellWith(pokemon: Pokemon, completion: @escaping (Data?) -> Void) {
-        service.sendRequestWithJSON(endpoint: pokemon.url, method: .get) { response, error in
+        service.sendRequestWithJSON(endpoint: pokemon.url, method: .get) { responseData, error in
             guard error == nil else {
                 completion(nil)
                 return
             }
             do {
-                guard let data = response as? Data else {
-                    completion(nil)
-                    return
-                }
+                guard let data = responseData else { return completion(nil) }
                 let attributes = try JSONDecoder().decode(PokemonAttributes.self, from: data)
                 let frontValue = attributes.attributes.frontImage
                 let url = URL(string: frontValue)
-                URLSession.shared.dataTask(with: url ?? URL(fileURLWithPath: "")) { data, response, error in
-                    guard let imageData = data else { return }
+                self.service.sendRequestWithJSON(endpoint: frontValue, method: .get) { responseData, error in
+                    guard let imageData = responseData else { return }
                     completion(imageData)
-                }.resume()
+                }
             }
             catch {
                 completion(nil)
@@ -64,20 +67,27 @@ final class PokemonListPresenter {
     // MARK: Private method(s)
     
     private func getPokemons() {
-        service.sendRequestWithJSON(endpoint: Endpoints.shared.baseURL, method: .get) {[weak self] response, error in
+        
+        func showError(error: Error?) {
+            delegate?.showAlert(
+                title: Constant.error,
+                message: error?.localizedDescription ?? "Sorry, something went wrong"
+            )
+        }
+        
+        service.sendRequestWithJSON(endpoint: Constant.url, method: .get) { [weak self] responseData, error in
             guard let self = self else { return }
-            guard error == nil else {
-                self.delegate?.showAlert(title: Constants.error, message: error?.localizedDescription ?? "Sorry, something went wrong")
-                return
-            }
-            do {
-                guard let pokemonResponse = response else { return }
-                let pokemonResult = try JSONDecoder().decode(PokemonResult.self, from: pokemonResponse as! Data)
-                self.delegate?.show(pokemonResult.results)
-            }
-            catch {
-                self.delegate?.showAlert(title: Constants.error, message: error.localizedDescription)
-            }
+            
+            guard error == nil else { return showError(error: error) }
+            
+            guard let pokemonResponse = responseData else { return showError(error: nil) }
+            
+            guard let pokemonResult = try? JSONDecoder().decode(
+                PokemonResult.self,
+                from: pokemonResponse
+            ) else { return showError(error: nil) }
+            
+            self.delegate?.show(pokemonResult.results)
         }
     }
 }

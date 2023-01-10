@@ -1,11 +1,11 @@
 //
-//  UITableViewCell.swift
+//  ReuseIdentifying.swift
 //  PokeDemo
 //
-//  Created by Rudr Bansal on 05/07/22.
+//  Created by Rudr Bansal on 11/01/23.
 //
 
-import UIKit
+import Foundation
 
 protocol ReuseIdentifying {
     static var reuseIdentifier: String { get }
@@ -16,6 +16,3 @@ extension ReuseIdentifying {
         return String(describing: Self.self)
     }
 }
-
-extension UITableViewCell: ReuseIdentifying {}
-

@@ -19,7 +19,6 @@ extension ServiceRepresentable {
 }
 
 final class Service: ServiceRepresentable {
-    
     // MARK: - Singleton
     
     static let shared = Service()
