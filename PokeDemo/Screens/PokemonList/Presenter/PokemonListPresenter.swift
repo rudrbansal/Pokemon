@@ -44,22 +44,16 @@ final class PokemonListPresenter {
     
     func didSetupCellWith(pokemon: Pokemon, completion: @escaping (Data?) -> Void) {
         service.sendRequestWithJSON(endpoint: pokemon.url, method: .get) { responseData, error in
-            guard error == nil else {
-                completion(nil)
-                return
-            }
-            do {
-                guard let data = responseData else { return completion(nil) }
-                let attributes = try JSONDecoder().decode(PokemonAttributes.self, from: data)
-                let frontValue = attributes.attributes.frontImage
-                let url = URL(string: frontValue)
-                self.service.sendRequestWithJSON(endpoint: frontValue, method: .get) { responseData, error in
-                    guard let imageData = responseData else { return }
-                    completion(imageData)
-                }
-            }
-            catch {
-                completion(nil)
+            guard error == nil else { return completion(nil) }
+            
+            guard let data = responseData else { return completion(nil) }
+            
+            let attributes = try? JSONDecoder().decode(PokemonAttributes.self, from: data)
+            guard let frontValue = attributes?.attributes.frontImage else { return completion(nil) }
+            
+            self.service.sendRequestWithJSON(endpoint: frontValue, method: .get) { responseData, error in
+                guard let imageData = responseData else { return completion(nil) }
+                completion(imageData)
             }
         }
     }
