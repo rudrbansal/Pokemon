@@ -11,8 +11,8 @@ final class PokemonListCell: UITableViewCell {
     
     // MARK: - Outlets
     
-    @IBOutlet weak var title: UILabel!
-    @IBOutlet weak var icon: UIImageView!
+    @IBOutlet var title: UILabel!
+    @IBOutlet var icon: UIImageView!
     
     // MARK: - Exposed Methods
 

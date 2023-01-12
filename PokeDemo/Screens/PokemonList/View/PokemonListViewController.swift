@@ -8,11 +8,11 @@
 
 import UIKit
 
-final class PokemonListViewController: BaseViewController {
+final class PokemonListViewController: UIViewController {
     
     // MARK: - IBOutlets
     
-    @IBOutlet private weak var tableView: UITableView! {
+    @IBOutlet private var tableView: UITableView! {
         didSet {
             tableView.register(UINib(nibName: PokemonListCell.reuseIdentifier, bundle: nil), forCellReuseIdentifier: PokemonListCell.reuseIdentifier)
             tableView.dataSource = self
