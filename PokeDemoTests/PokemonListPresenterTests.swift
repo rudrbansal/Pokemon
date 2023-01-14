@@ -39,10 +39,8 @@ final class PokemonListPresenterTests: XCTestCase {
     }
     
     func testGetPokemonListCallsAPI(){
-        // Given
         
         // When
-        presenter = PokemonListPresenter(service: mockService)
         presenter.viewDidLoad()
         
         // Then
@@ -81,7 +79,7 @@ final class PokemonListPresenterTests: XCTestCase {
         // Then
         XCTAssertEqual(mockService.sendRequestWithJSONIsCalledIndex, 1)
         XCTAssertEqual(mockDelegate.showAlertCalled, true)
-        XCTAssertEqual(mockDelegate.showAlertTitle, Constants.error)
+        XCTAssertEqual(mockDelegate.showAlertTitle, "Error")
         XCTAssertEqual(mockDelegate.showAlertMessage, "The operation couldn’t be completed. (PokeDemoTests.TestError error 1.)")
     }
     
