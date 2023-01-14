@@ -9,11 +9,23 @@ import Foundation
 import Alamofire
 
 protocol ServiceRepresentable {
-    func sendRequestWithJSON(endpoint: String, method: HTTPMethod, parameters: [String:Any]?, header: String?, _ onCompletion: @escaping ( _ responseData: Data?, _ error: Error?) -> Void)
+    func sendRequestWithJSON(
+        endpoint: String,
+        method: HTTPMethod,
+        parameters: [String:Any]?,
+        header: String?,
+        _ onCompletion: @escaping ( _ responseData: Data?, _ error: Error?) -> Void
+    )
 }
 
 extension ServiceRepresentable {
-    func sendRequestWithJSON(endpoint: String, method: HTTPMethod, parameters: [String:Any]? = nil, header: String? = nil, _ onCompletion: @escaping ( _ responseData: Data?, _ error: Error?) -> Void){
+    func sendRequestWithJSON(
+        endpoint: String,
+        method: HTTPMethod,
+        parameters: [String:Any]? = nil,
+        header: String? = nil,
+        _ onCompletion: @escaping ( _ responseData: Data?, _ error: Error?) -> Void
+    ){
         self.sendRequestWithJSON(endpoint: endpoint, method: method, parameters: parameters, header: header, onCompletion)
     }
 }
