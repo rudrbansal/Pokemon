@@ -26,16 +26,4 @@ final class MockService: ServiceRepresentable {
         sendRequestWithJSONEndPoint = endpoint
         self.onCompletion = onCompletion
     }
-    
-    func loadJson(fileName: String) -> [Pokemon]? {
-        guard
-            let url = Bundle.main.url(forResource: fileName, withExtension: "json"),
-            let data = try? Data(contentsOf: url),
-            let pokemons = try? JSONDecoder().decode(PokemonResult.self, from: data)
-                
-        else {
-            return nil
-        }
-        return pokemons.results
-    }
 }

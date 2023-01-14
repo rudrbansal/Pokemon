@@ -58,13 +58,13 @@ final class PokemonListPresenterTests: XCTestCase {
         presenter.viewDidLoad()
         
         // When service sends successful response
-        let stubPokemons = mockService.loadJson(fileName: "PokemonList")
-        let pokemonResult = PokemonResult.init(count: stubPokemons?.count ?? 0, next: "", results: stubPokemons ?? [])
-        let pokemonData = try? JSONEncoder().encode(pokemonResult)
-        mockService.onCompletion?(pokemonData, nil)
+        
+        let jsonData = JSONString.success.data(using: .utf8)
+        mockService.onCompletion?(jsonData, nil)
         
         // Then
-        XCTAssertEqual(mockDelegate.pokemons, stubPokemons)
+        XCTAssertEqual(mockDelegate.pokemons?.first?.name, "test")
+        XCTAssertEqual(mockDelegate.pokemons?.first?.url, "testURL")
     }
     
     func testGetPokemonListReturnsError(){
@@ -101,6 +101,30 @@ final class PokemonListPresenterTests: XCTestCase {
     }
 }
 
+private extension PokemonListPresenterTests {
+    enum JSONString {
+        static let success = """
+        {
+            "count": 1279,
+            "next": "https://pokeapi.co/api/v2/pokemon?offset=20&limit=20",
+            "previous": null,
+            "results": [{
+                "name": "test",
+                "url": "testURL"
+            }]
+        }
+        """
+        static let successWithEmptyArray = """
+        {
+            "count": 1279,
+            "next": "https://pokeapi.co/api/v2/pokemon?offset=20&limit=20",
+            "previous": null,
+            "results": []
+        }
+        """
+    }
+}
+
 struct TestError: Error{
     
 }
@@ -120,29 +144,5 @@ final class MockPokemonListViewPresenterDelegate: PokemonListPresenterDelegate {
         showAlertCalled = true
         showAlertTitle = title
         showAlertMessage = message
-    }
-}
-
-extension PokemonResult: Encodable {
-    public func encode(to encoder: Encoder) throws {
-        var container = encoder.container(keyedBy: CodingKeys.self)
-        try container.encode(count, forKey: .count)
-        try container.encode(next, forKey: .next)
-        try container.encode(previous, forKey: .previous)
-        try container.encode(results, forKey: .results)
-        
-    }
-}
-
-extension Pokemon: Encodable, Equatable {
-    
-    public static func == (lhs: Pokemon, rhs: Pokemon) -> Bool {
-        return true
-    }
-    
-    public func encode(to encoder: Encoder) throws {
-        var container = encoder.container(keyedBy: CodingKeys.self)
-        try container.encode(name, forKey: .name)
-        try container.encode(url, forKey: .url)
     }
 }
