@@ -86,18 +86,16 @@ final class PokemonListPresenterTests: XCTestCase {
     func testGetPokemonListReturnsEmptyArray() {
         // Given
         let mockDelegate = MockPokemonListViewPresenterDelegate()
-        presenter = PokemonListPresenter()
         presenter.delegate = mockDelegate
         presenter.viewDidLoad()
         
         // When service sends empty array in response
-        let stubPokemons: [Pokemon] = []
-        let pokemonResult = PokemonResult.init(count: stubPokemons.count , next: "", results: stubPokemons)
-        let pokemonData = try? JSONEncoder().encode(pokemonResult)
-        mockService.onCompletion?(pokemonData, nil)
+        let jsonData = JSONString.successWithEmptyArray.data(using: .utf8)
+        mockService.onCompletion?(jsonData, nil)
         
         // Then
-        XCTAssertEqual(mockDelegate.pokemons?.count, nil)
+        XCTAssertEqual(mockService.sendRequestWithJSONIsCalledIndex, 1)
+        XCTAssertEqual(mockDelegate.pokemons?.count, 0)
     }
 }
 
