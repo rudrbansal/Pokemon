@@ -63,6 +63,7 @@ final class PokemonListPresenterTests: XCTestCase {
         mockService.onCompletion?(jsonData, nil)
         
         // Then
+        XCTAssertEqual(mockService.sendRequestWithJSONIsCalledIndex, 1)
         XCTAssertEqual(mockDelegate.pokemons?.first?.name, "test")
         XCTAssertEqual(mockDelegate.pokemons?.first?.url, "testURL")
     }
@@ -78,6 +79,7 @@ final class PokemonListPresenterTests: XCTestCase {
         mockService.onCompletion?(nil, TestError())
         
         // Then
+        XCTAssertEqual(mockService.sendRequestWithJSONIsCalledIndex, 1)
         XCTAssertEqual(mockDelegate.showAlertCalled, true)
         XCTAssertEqual(mockDelegate.showAlertTitle, Constants.error)
         XCTAssertEqual(mockDelegate.showAlertMessage, "The operation couldn’t be completed. (PokeDemoTests.TestError error 1.)")
