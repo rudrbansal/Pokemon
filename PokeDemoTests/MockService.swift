@@ -18,7 +18,7 @@ final class MockService: ServiceRepresentable {
     func sendRequestWithJSON(
         endpoint: String,
         method: HTTPMethod,
-        parameters: [String:Any]? = nil,
+        parameters: [String:String]? = nil,
         header: String? = nil,
         _ onCompletion: @escaping ( _ responseData: Data?, _ error: Error?) -> Void
     ){
