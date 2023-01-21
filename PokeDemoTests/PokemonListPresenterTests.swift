@@ -78,6 +78,7 @@ final class PokemonListPresenterTests: XCTestCase {
         
         // Then
         XCTAssertEqual(mockService.sendRequestWithJSONIsCalledCount, 1)
+        XCTAssertEqual(mockDelegate.pokemonsFetchedCount, 1)
         XCTAssertEqual(mockDelegate.showAlertCalledCount, 1)
         XCTAssertEqual(mockDelegate.showAlertTitle, "Error")
         XCTAssertEqual(mockDelegate.showAlertMessage, "The operation couldn’t be completed. (PokeDemoTests.TestError error 1.)")
@@ -129,12 +130,14 @@ struct TestError: Error{
 
 final class MockPokemonListViewPresenterDelegate: PokemonListPresenterDelegate {
     
+    private(set) var pokemonsFetchedCount: Int = 0
     private(set) var showAlertCalledCount: Int = 0
     private(set) var showAlertTitle: String?
     private(set) var showAlertMessage: String?
     private(set) var pokemons: [Pokemon]?
     
     func show(_ pokemons: [Pokemon]) {
+        pokemonsFetchedCount += 1
         self.pokemons = pokemons
     }
     
