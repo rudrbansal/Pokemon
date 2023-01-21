@@ -11,7 +11,7 @@ import Alamofire
 
 final class MockService: ServiceRepresentable {
     
-    var sendRequestWithJSONIsCalledIndex = 0
+    var sendRequestWithJSONIsCalledCount = 0
     var sendRequestWithJSONEndPoint: String = ""
     var onCompletion: (( _ responseData: Data?, _ error: Error?) -> Void)?
     
@@ -22,7 +22,7 @@ final class MockService: ServiceRepresentable {
         header: String? = nil,
         _ onCompletion: @escaping ( _ responseData: Data?, _ error: Error?) -> Void
     ){
-        sendRequestWithJSONIsCalledIndex += 1
+        sendRequestWithJSONIsCalledCount += 1
         sendRequestWithJSONEndPoint = endpoint
         self.onCompletion = onCompletion
     }

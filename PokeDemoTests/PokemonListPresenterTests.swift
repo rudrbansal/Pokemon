@@ -44,7 +44,7 @@ final class PokemonListPresenterTests: XCTestCase {
         presenter.viewDidLoad()
         
         // Then
-        XCTAssertEqual(mockService.sendRequestWithJSONIsCalledIndex, 1)
+        XCTAssertEqual(mockService.sendRequestWithJSONIsCalledCount, 1)
         XCTAssertEqual(mockService.sendRequestWithJSONEndPoint, "https://pokeapi.co/api/v2/pokemon")
     }
     
@@ -61,7 +61,7 @@ final class PokemonListPresenterTests: XCTestCase {
         mockService.onCompletion?(jsonData, nil)
         
         // Then
-        XCTAssertEqual(mockService.sendRequestWithJSONIsCalledIndex, 1)
+        XCTAssertEqual(mockService.sendRequestWithJSONIsCalledCount, 1)
         XCTAssertEqual(mockDelegate.pokemons?.first?.name, "test")
         XCTAssertEqual(mockDelegate.pokemons?.first?.url, "testURL")
     }
@@ -94,7 +94,7 @@ final class PokemonListPresenterTests: XCTestCase {
         mockService.onCompletion?(jsonData, nil)
         
         // Then
-        XCTAssertEqual(mockService.sendRequestWithJSONIsCalledIndex, 1)
+        XCTAssertEqual(mockService.sendRequestWithJSONIsCalledCount, 1)
         XCTAssertEqual(mockDelegate.pokemons?.count, 0)
     }
 }
