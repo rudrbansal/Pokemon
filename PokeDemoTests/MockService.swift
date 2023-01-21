@@ -11,9 +11,9 @@ import Alamofire
 
 final class MockService: ServiceRepresentable {
     
-    var sendRequestWithJSONIsCalledCount = 0
-    var sendRequestWithJSONEndPoint: String = ""
-    var onCompletion: (( _ responseData: Data?, _ error: Error?) -> Void)?
+    private(set) var sendRequestWithJSONIsCalledCount = 0
+    private(set) var sendRequestWithJSONEndPoint: String = ""
+    private(set) var onCompletion: (( _ responseData: Data?, _ error: Error?) -> Void)?
     
     func sendRequestWithJSON(
         endpoint: String,

@@ -10,8 +10,8 @@ import XCTest
 
 final class PokemonListPresenterTests: XCTestCase {
     
-    var presenter: PokemonListPresenter!
-    let mockService = MockService()
+    private(set) var presenter: PokemonListPresenter!
+    private let mockService = MockService()
     
     // MARK: - Lifecycle
     
@@ -129,10 +129,10 @@ struct TestError: Error{
 
 final class MockPokemonListViewPresenterDelegate: PokemonListPresenterDelegate {
     
-    var showAlertCalled: Bool = false
-    var showAlertTitle: String?
-    var showAlertMessage: String?
-    var pokemons: [Pokemon]?
+    private(set) var showAlertCalled: Bool = false
+    private(set) var showAlertTitle: String?
+    private(set) var showAlertMessage: String?
+    private(set) var pokemons: [Pokemon]?
     
     func show(_ pokemons: [Pokemon]) {
         self.pokemons = pokemons
