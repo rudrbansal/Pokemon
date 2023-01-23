@@ -98,6 +98,58 @@ final class PokemonListPresenterTests: XCTestCase {
         XCTAssertEqual(mockService.sendRequestWithJSONIsCalledCount, 1)
         XCTAssertEqual(mockDelegate.pokemons?.count, 0)
     }
+    
+    func testGetPokemonListReturnsNil(){
+        // Given
+        let mockDelegate = MockPokemonListViewPresenterDelegate()
+        presenter = PokemonListPresenter(service: mockService)
+        presenter?.delegate = mockDelegate
+        presenter?.viewDidLoad()
+        
+        // When service sends nil
+        mockService.onCompletion?(nil, nil)
+        
+        // Then
+        XCTAssertEqual(mockService.sendRequestWithJSONIsCalledCount, 1)
+        XCTAssertEqual(mockDelegate.pokemonsFetchedCount, 0)
+        XCTAssertEqual(mockDelegate.showAlertCalledCount, 1)
+        XCTAssertEqual(mockDelegate.showAlertTitle, "Error")
+        XCTAssertEqual(mockDelegate.showAlertMessage, "Sorry, something went wrong")
+    }
+    
+    func testGetPokemonListReturnsSuccessWithError(){
+        // Given
+        let mockDelegate = MockPokemonListViewPresenterDelegate()
+        presenter = PokemonListPresenter(service: mockService)
+        presenter?.delegate = mockDelegate
+        presenter?.viewDidLoad()
+        
+        // When service sends successful response with error
+        let jsonData = JSONString.success.data(using: .utf8)
+        mockService.onCompletion?(jsonData, TestError())
+
+        // Then
+        XCTAssertEqual(mockService.sendRequestWithJSONIsCalledCount, 1)
+        XCTAssertEqual(mockDelegate.pokemonsFetchedCount, 0)
+        XCTAssertEqual(mockDelegate.showAlertCalledCount, 1)
+        XCTAssertEqual(mockDelegate.showAlertTitle, "Error")
+        XCTAssertEqual(mockDelegate.showAlertMessage, "The operation couldn’t be completed. (PokeDemoTests.TestError error 1.)")
+    }
+    
+    func testGetPokemonListReturnsWrongData(){
+        // Given
+        let mockDelegate = MockPokemonListViewPresenterDelegate()
+        presenter = PokemonListPresenter(service: mockService)
+        presenter?.delegate = mockDelegate
+        presenter?.viewDidLoad()
+        
+        // When service sends wrong response
+        let jsonData = JSONString.successWithWrongData.data(using: .utf8)
+        mockService.onCompletion?(jsonData, nil)
+        
+        // Then
+        XCTAssertEqual(mockService.sendRequestWithJSONIsCalledCount, 1)
+    }
 }
 
 private extension PokemonListPresenterTests {
@@ -119,6 +171,17 @@ private extension PokemonListPresenterTests {
             "next": "https://pokeapi.co/api/v2/pokemon?offset=20&limit=20",
             "previous": null,
             "results": []
+        }
+        """
+        static let successWithWrongData = """
+        {
+            "count": 1279,
+            "next": "https://pokeapi.co/api/v2/pokemon?offset=20&limit=20",
+            "previous": null,
+            "results": [{
+                "name": 123,
+                "url": "testURL"
+            }]
         }
         """
     }
