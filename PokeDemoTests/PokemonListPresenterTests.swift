@@ -46,6 +46,9 @@ final class PokemonListPresenterTests: XCTestCase {
         // Then
         XCTAssertEqual(mockService.sendRequestWithJSONIsCalledCount, 1)
         XCTAssertEqual(mockService.sendRequestWithJSONEndPoint, "https://pokeapi.co/api/v2/pokemon")
+        XCTAssertEqual(mockService.sendRequestWithJSONMethod, .get)
+        XCTAssertNil(mockService.sendRequestWithJSONParameter)
+        XCTAssertNil(mockService.sendRequestWithJSONHeader)
     }
     
     func testGetPokemonListReturnsSuccess(){
