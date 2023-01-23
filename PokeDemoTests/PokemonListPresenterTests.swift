@@ -10,7 +10,7 @@ import XCTest
 
 final class PokemonListPresenterTests: XCTestCase {
     
-    private(set) var presenter: PokemonListPresenter!
+    private(set) var presenter: PokemonListPresenter?
     private let mockService = MockService()
     
     // MARK: - Lifecycle
@@ -32,16 +32,16 @@ final class PokemonListPresenterTests: XCTestCase {
         let mockDelegate = MockPokemonListViewPresenterDelegate()
         
         // When
-        presenter.delegate = mockDelegate
+        presenter?.delegate = mockDelegate
         
         // Then
-        XCTAssertTrue(presenter.delegate is MockPokemonListViewPresenterDelegate)
+        XCTAssertTrue(presenter?.delegate is MockPokemonListViewPresenterDelegate)
     }
     
     func testGetPokemonListCallsAPI(){
         
         // When
-        presenter.viewDidLoad()
+        presenter?.viewDidLoad()
         
         // Then
         XCTAssertEqual(mockService.sendRequestWithJSONIsCalledCount, 1)
@@ -52,8 +52,8 @@ final class PokemonListPresenterTests: XCTestCase {
         // Given
         let mockDelegate = MockPokemonListViewPresenterDelegate()
         presenter = PokemonListPresenter(service: mockService)
-        presenter.delegate = mockDelegate
-        presenter.viewDidLoad()
+        presenter?.delegate = mockDelegate
+        presenter?.viewDidLoad()
         
         // When service sends successful response
         
@@ -70,15 +70,15 @@ final class PokemonListPresenterTests: XCTestCase {
         // Given
         let mockDelegate = MockPokemonListViewPresenterDelegate()
         presenter = PokemonListPresenter(service: mockService)
-        presenter.delegate = mockDelegate
-        presenter.viewDidLoad()
+        presenter?.delegate = mockDelegate
+        presenter?.viewDidLoad()
         
         // When service sends error
         mockService.onCompletion?(nil, TestError())
         
         // Then
         XCTAssertEqual(mockService.sendRequestWithJSONIsCalledCount, 1)
-        XCTAssertEqual(mockDelegate.pokemonsFetchedCount, 1)
+        XCTAssertEqual(mockDelegate.pokemonsFetchedCount, 0)
         XCTAssertEqual(mockDelegate.showAlertCalledCount, 1)
         XCTAssertEqual(mockDelegate.showAlertTitle, "Error")
         XCTAssertEqual(mockDelegate.showAlertMessage, "The operation couldn’t be completed. (PokeDemoTests.TestError error 1.)")
@@ -87,8 +87,8 @@ final class PokemonListPresenterTests: XCTestCase {
     func testGetPokemonListReturnsEmptyArray() {
         // Given
         let mockDelegate = MockPokemonListViewPresenterDelegate()
-        presenter.delegate = mockDelegate
-        presenter.viewDidLoad()
+        presenter?.delegate = mockDelegate
+        presenter?.viewDidLoad()
         
         // When service sends empty array in response
         let jsonData = JSONString.successWithEmptyArray.data(using: .utf8)
