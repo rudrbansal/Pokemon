@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="21225" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina6_0" orientation="portrait" appearance="light"/>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="21207"/>
+        <capability name="System colors in document resources" minToolsVersion="11.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" restorationIdentifier="PokemonListCell" insetsLayoutMarginsFromSafeArea="NO" selectionStyle="none" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="PokemonListCell" rowHeight="80" id="ZJ1-0R-kbx" customClass="PokemonListCell" customModule="PokeDemo" customModuleProvider="target">
+            <rect key="frame" x="0.0" y="0.0" width="414" height="80"/>
+            <autoresizingMask key="autoresizingMask"/>
+            <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="ZJ1-0R-kbx" id="rfZ-Od-rwV">
+                <rect key="frame" x="0.0" y="0.0" width="414" height="80"/>
+                <autoresizingMask key="autoresizingMask"/>
+                <subviews>
+                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Dw8-je-srx">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="80"/>
+                        <subviews>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="plb-hJ-Hle">
+                                <rect key="frame" x="88" y="8.0000000000000018" width="318" height="21.666666666666671"/>
+                                <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="18"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="isI-yW-WNi">
+                                <rect key="frame" x="8" y="8" width="64" height="64"/>
+                                <color key="backgroundColor" red="0.35686274509999999" green="0.69803921570000005" blue="0.14117647059999999" alpha="0.84705882349999995" colorSpace="calibratedRGB"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="64" id="8JK-eX-vos"/>
+                                    <constraint firstAttribute="width" secondItem="isI-yW-WNi" secondAttribute="height" id="jK5-K7-rJF"/>
+                                </constraints>
+                                <userDefinedRuntimeAttributes>
+                                    <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
+                                        <real key="value" value="8"/>
+                                    </userDefinedRuntimeAttribute>
+                                </userDefinedRuntimeAttributes>
+                            </imageView>
+                        </subviews>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                        <constraints>
+                            <constraint firstItem="plb-hJ-Hle" firstAttribute="top" secondItem="isI-yW-WNi" secondAttribute="top" id="4Rg-1y-ad6"/>
+                            <constraint firstAttribute="trailing" secondItem="plb-hJ-Hle" secondAttribute="trailing" constant="8" id="MAg-T8-1T0"/>
+                            <constraint firstItem="isI-yW-WNi" firstAttribute="leading" secondItem="Dw8-je-srx" secondAttribute="leading" constant="8" id="fYK-X0-lV9"/>
+                            <constraint firstItem="isI-yW-WNi" firstAttribute="top" secondItem="Dw8-je-srx" secondAttribute="top" constant="8" id="goS-3Y-aar"/>
+                            <constraint firstItem="plb-hJ-Hle" firstAttribute="leading" secondItem="isI-yW-WNi" secondAttribute="trailing" constant="16" id="h5n-tA-oCH"/>
+                            <constraint firstAttribute="bottom" secondItem="isI-yW-WNi" secondAttribute="bottom" constant="8" id="ma3-Sn-0bb"/>
+                        </constraints>
+                    </view>
+                </subviews>
+                <constraints>
+                    <constraint firstItem="Dw8-je-srx" firstAttribute="top" secondItem="rfZ-Od-rwV" secondAttribute="top" id="8zh-EO-LIm"/>
+                    <constraint firstItem="Dw8-je-srx" firstAttribute="leading" secondItem="rfZ-Od-rwV" secondAttribute="leading" id="JOh-aU-5dx"/>
+                    <constraint firstAttribute="bottom" secondItem="Dw8-je-srx" secondAttribute="bottom" id="RyD-4O-egW"/>
+                    <constraint firstAttribute="trailing" secondItem="Dw8-je-srx" secondAttribute="trailing" id="yqW-yN-dLe"/>
+                </constraints>
+            </tableViewCellContentView>
+            <connections>
+                <outlet property="icon" destination="isI-yW-WNi" id="Lrg-ze-s5F"/>
+                <outlet property="title" destination="plb-hJ-Hle" id="gtp-vO-cwc"/>
+            </connections>
+            <point key="canvasLocation" x="136.92307692307691" y="26.303317535545023"/>
+        </tableViewCell>
+    </objects>
+    <resources>
+        <systemColor name="systemBackgroundColor">
+            <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+        </systemColor>
+    </resources>
+</document>
