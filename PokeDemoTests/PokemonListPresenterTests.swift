@@ -139,15 +139,15 @@ final class PokemonListPresenterTests: XCTestCase {
         XCTAssertEqual(mockDelegate.showAlertMessage, "The operation couldn’t be completed. (PokeDemoTests.TestError error 1.)")
     }
     
-    func testGetPokemonListReturnsWrongData(){
+    func testGetPokemonListReturnsIncorrectData(){
         // Given
         let mockDelegate = MockPokemonListViewPresenterDelegate()
         presenter = PokemonListPresenter(service: mockService)
         presenter?.delegate = mockDelegate
         presenter?.viewDidLoad()
         
-        // When service sends wrong response
-        let jsonData = JSONString.successWithWrongData.data(using: .utf8)
+        // When service sends incorrect response
+        let jsonData = JSONString.successWithIncorrectData.data(using: .utf8)
         mockService.onCompletion?(jsonData, nil)
         
         // Then
@@ -276,7 +276,7 @@ private extension PokemonListPresenterTests {
             "results": []
         }
         """
-        static let successWithWrongData = """
+        static let successWithIncorrectData = """
         {
             "count": 1279,
             "next": "https://pokeapi.co/api/v2/pokemon?offset=20&limit=20",
