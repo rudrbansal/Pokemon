@@ -16,6 +16,7 @@ final class PokemonListViewController: UIViewController {
         didSet {
             tableView.register(UINib(nibName: PokemonListCell.reuseIdentifier, bundle: nil), forCellReuseIdentifier: PokemonListCell.reuseIdentifier)
             tableView.dataSource = self
+            tableView.delegate = self
         }
     }
     
@@ -54,6 +55,15 @@ extension PokemonListViewController: UITableViewDataSource {
             }
         }
         return cell
+    }
+}
+
+extension PokemonListViewController: UITableViewDelegate {
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        let detailViewController = UIStoryboard(name: "PokemonDetail", bundle: nil).instantiateViewController(withIdentifier: "PokemonDetailViewController") as! PokemonDetailViewController
+        detailViewController.pokemon = (pokemons[indexPath.row])
+        navigationController?.pushViewController(detailViewController, animated: true)
     }
 }
 
