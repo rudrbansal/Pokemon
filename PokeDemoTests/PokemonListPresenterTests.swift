@@ -233,6 +233,26 @@ final class PokemonListPresenterTests: XCTestCase {
         // Then
         XCTAssertEqual(mockService.sendRequestWithJSONIsCalledCount, 1)
     }
+    
+    func testGetPokemonImageReturnsIncorrectResponseForImage(){
+        // Given
+        let mockDelegate = MockPokemonListViewPresenterDelegate()
+        let imageData = try? Data(contentsOf: URL(fileURLWithPath: Bundle(for: type(of: self)).path(forResource: "testing", ofType: "png") ?? ""))
+        presenter = PokemonListPresenter(service: mockService)
+        presenter?.delegate = mockDelegate
+        presenter?.didSetupCellWith(pokemon: Pokemon(name: "abc", url: "testURL"), completion: { data in
+            XCTAssertEqual(data, imageData)
+        })
+        
+        // When service sends incorrect response for image
+        let jsonData = JSONString.successWithPokemonInfo.data(using: .utf8)
+        mockService.onCompletion?(jsonData, nil)
+        
+        // Then
+        XCTAssertEqual(mockService.sendRequestWithJSONIsCalledCount, 2)
+        
+        mockService.onCompletion?(imageData, nil)
+    }
 }
 
 private extension PokemonListPresenterTests {
