@@ -12,7 +12,10 @@ class PokemonDetailViewController: UIViewController {
     
     // MARK: - IBOutlets
     
-    @IBOutlet weak var pokemonImageView: UIImageView!
+    @IBOutlet private var imageView: UIImageView!
+    @IBOutlet private var height: UILabel!
+    @IBOutlet private var weight: UILabel!
+    @IBOutlet private var types: UILabel!
     
     // MARK: - Properties
     
@@ -44,10 +47,14 @@ extension PokemonDetailViewController: PokemonDetailViewPresenterDelegate {
         if let frontValue = pokemon.attributes.frontImage as String? {
             presenter.fetchPokemonImageFrom(frontValue)
         }
+        height.text = "\(pokemon.height) ft"
+        weight.text = "\(pokemon.weight) kg"
+        types.text = presenter.getPokemonTypes(types: pokemon.types)
+        
     }
     
     func updateimage(image: UIImage) {
-        pokemonImageView.image = image
+        imageView.image = image
     }
     
     func showAlert(title: String, message: String) {

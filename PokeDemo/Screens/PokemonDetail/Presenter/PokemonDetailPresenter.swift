@@ -47,7 +47,7 @@ final class PokemonDetailPresenter {
             if error == nil {
                 guard let response = response else { return }
                 let attributes = try? JSONDecoder().decode(PokemonAttributes.self, from: response)
-                self.delegate?.showPokemonDetail(pokemon: attributes ?? PokemonAttributes.init(name: "", id: 0, attributes: PokemonImageAttribute.init(frontImage: "")))
+                self.delegate?.showPokemonDetail(pokemon: attributes ?? PokemonAttributes.init(name: "", id: 0, attributes: PokemonImageAttribute.init(frontImage: ""), types: [], height: 0, weight: 0))
             } else {
                 self.delegate?.showAlert(title: self.errorTitle, message: error!.localizedDescription)
             }
@@ -64,5 +64,13 @@ final class PokemonDetailPresenter {
                 self.delegate?.showAlert(title: self.errorTitle, message: error!.localizedDescription)
             }
         }
+    }
+    
+    func getPokemonTypes(types: [TypeElement]) -> String {
+        var pokemonTypesArray: [String] = []
+        for type in types {
+            pokemonTypesArray.append(type.type.name.uppercased())
+        }
+        return pokemonTypesArray.joined(separator: ", ")
     }
 }
