@@ -130,7 +130,7 @@ final class PokemonListPresenterTests: XCTestCase {
         // When service sends successful response with error
         let jsonData = JSONString.success.data(using: .utf8)
         mockService.onCompletion?(jsonData, TestError())
-
+        
         // Then
         XCTAssertEqual(mockService.sendRequestWithJSONIsCalledCount, 1)
         XCTAssertEqual(mockDelegate.pokemonsFetchedCount, 0)
@@ -139,19 +139,119 @@ final class PokemonListPresenterTests: XCTestCase {
         XCTAssertEqual(mockDelegate.showAlertMessage, "The operation couldn’t be completed. (PokeDemoTests.TestError error 1.)")
     }
     
-    func testGetPokemonListReturnsWrongData(){
+    func testGetPokemonListReturnsIncorrectData(){
         // Given
         let mockDelegate = MockPokemonListViewPresenterDelegate()
         presenter = PokemonListPresenter(service: mockService)
         presenter?.delegate = mockDelegate
         presenter?.viewDidLoad()
         
-        // When service sends wrong response
-        let jsonData = JSONString.successWithWrongData.data(using: .utf8)
+        // When service sends incorrect response
+        let jsonData = JSONString.successWithIncorrectData.data(using: .utf8)
         mockService.onCompletion?(jsonData, nil)
         
         // Then
         XCTAssertEqual(mockService.sendRequestWithJSONIsCalledCount, 1)
+    }
+    
+    func testGetPokemonImageCallsAPI(){
+        
+        // When
+        presenter?.didSetupCellWith(pokemon: Pokemon(name: "abc", url: "testURL"), completion: { data in
+        })
+        
+        // Then
+        XCTAssertEqual(mockService.sendRequestWithJSONIsCalledCount, 1)
+        XCTAssertEqual(mockService.sendRequestWithJSONEndPoint, "testURL")
+        XCTAssertEqual(mockService.sendRequestWithJSONMethod, .get)
+        XCTAssertNil(mockService.sendRequestWithJSONParameter)
+        XCTAssertNil(mockService.sendRequestWithJSONHeader)
+    }
+    
+    func testGetPokemonImageReturnsSuccess(){
+        // Given
+        let mockDelegate = MockPokemonListViewPresenterDelegate()
+        let imageData = try? Data(contentsOf: URL(fileURLWithPath: Bundle(for: type(of: self)).path(forResource: "test", ofType: "png") ?? ""))
+        presenter = PokemonListPresenter(service: mockService)
+        presenter?.delegate = mockDelegate
+        presenter?.didSetupCellWith(pokemon: Pokemon(name: "abc", url: "testURL"), completion: { data in
+            XCTAssertEqual(data, imageData)
+        })
+        
+        // When service returns successful response
+        let jsonData = JSONString.successWithPokemonInfo.data(using: .utf8)
+        mockService.onCompletion?(jsonData, nil)
+        
+        // Then
+        XCTAssertEqual(mockService.sendRequestWithJSONIsCalledCount, 2)
+        
+        mockService.onCompletion?(imageData, nil)
+    }
+    
+    func testGetPokemonImageReturnsError(){
+        // Given
+        let mockDelegate = MockPokemonListViewPresenterDelegate()
+        presenter = PokemonListPresenter(service: mockService)
+        presenter?.delegate = mockDelegate
+        presenter?.didSetupCellWith(pokemon: Pokemon(name: "abc", url: "testURL"), completion: { data in
+        })
+        
+        // When service returns error
+        mockService.onCompletion?(nil, TestError())
+        
+        // Then
+        XCTAssertEqual(mockService.sendRequestWithJSONIsCalledCount, 1)
+    }
+    
+    func testGetPokemonImageReturnsNil(){
+        // Given
+        let mockDelegate = MockPokemonListViewPresenterDelegate()
+        presenter = PokemonListPresenter(service: mockService)
+        presenter?.delegate = mockDelegate
+        presenter?.didSetupCellWith(pokemon: Pokemon(name: "abc", url: "testURL"), completion: { data in
+        })
+        
+        // When service returns nil
+        mockService.onCompletion?(nil, nil)
+        
+        // Then
+        XCTAssertEqual(mockService.sendRequestWithJSONIsCalledCount, 1)
+    }
+    
+    func testGetPokemonImageReturnsResponseWithIncorrectJSON(){
+        // Given
+        let mockDelegate = MockPokemonListViewPresenterDelegate()
+        presenter = PokemonListPresenter(service: mockService)
+        presenter?.delegate = mockDelegate
+        presenter?.didSetupCellWith(pokemon: Pokemon(name: "abc", url: "testURL"), completion: { data in
+        })
+        
+        // When service returns incorrect response
+        let jsonData = JSONString.errorWithIncorrectPokemonInfo.data(using: .utf8)
+        mockService.onCompletion?(jsonData, nil)
+        
+        // Then
+        XCTAssertEqual(mockService.sendRequestWithJSONIsCalledCount, 1)
+    }
+    
+    func testGetPokemonImageReturnsIncorrectResponseForImage(){
+        // Given
+        let mockDelegate = MockPokemonListViewPresenterDelegate()
+        let imageData = try? Data(contentsOf: URL(fileURLWithPath: Stub.pokemonImage ?? ""))
+        presenter = PokemonListPresenter(service: mockService)
+        presenter?.delegate = mockDelegate
+        presenter?.didSetupCellWith(pokemon: Pokemon(name: "abc", url: "testURL"), completion: { data in
+            XCTAssertEqual(data, imageData)
+        })
+        
+        // When service sends incorrect response for image
+        let jsonData = JSONString.successWithPokemonInfo.data(using: .utf8)
+        mockService.onCompletion?(jsonData, nil)
+        
+        // Then
+        XCTAssertEqual(mockService.sendRequestWithJSONIsCalledCount, 2)
+        
+        mockService.onCompletion?(imageData, nil)
     }
 }
 
@@ -176,7 +276,7 @@ private extension PokemonListPresenterTests {
             "results": []
         }
         """
-        static let successWithWrongData = """
+        static let successWithIncorrectData = """
         {
             "count": 1279,
             "next": "https://pokeapi.co/api/v2/pokemon?offset=20&limit=20",
@@ -187,7 +287,33 @@ private extension PokemonListPresenterTests {
             }]
         }
         """
+        static let successWithPokemonInfo = """
+        {
+            "id":1,
+            "name":"bulbasaur",
+            "sprites":{
+                "front_default":"https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/1.png"
+            }
+        }
+        """
+        static let errorWithIncorrectPokemonInfo = """
+        {
+            "id_":1,
+            "name_":"bulbasaur",
+            "sprites":{
+                "front_default":"https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/1.png"
+            }
+        }
+        """
     }
+    
+    enum Stub {
+        static let pokemonImage = Bundle.instance.path(forResource: "testing", ofType: "png")
+    }
+}
+
+extension Bundle {
+    static let instance = Bundle(for: type(of: PokemonListPresenterTests()))
 }
 
 struct TestError: Error{
