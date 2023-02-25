@@ -237,7 +237,7 @@ final class PokemonListPresenterTests: XCTestCase {
     func testGetPokemonImageReturnsIncorrectResponseForImage(){
         // Given
         let mockDelegate = MockPokemonListViewPresenterDelegate()
-        let imageData = try? Data(contentsOf: URL(fileURLWithPath: Bundle(for: type(of: self)).path(forResource: "testing", ofType: "png") ?? ""))
+        let imageData = try? Data(contentsOf: URL(fileURLWithPath: Stub.pokemonImage ?? ""))
         presenter = PokemonListPresenter(service: mockService)
         presenter?.delegate = mockDelegate
         presenter?.didSetupCellWith(pokemon: Pokemon(name: "abc", url: "testURL"), completion: { data in
@@ -306,6 +306,14 @@ private extension PokemonListPresenterTests {
         }
         """
     }
+    
+    enum Stub {
+        static let pokemonImage = Bundle.instance.path(forResource: "testing", ofType: "png")
+    }
+}
+
+extension Bundle {
+    static let instance = Bundle(for: type(of: PokemonListPresenterTests()))
 }
 
 struct TestError: Error{
